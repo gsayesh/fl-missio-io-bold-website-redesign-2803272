@@ -1,0 +1,16 @@
+{
+ "entries": [
+  {
+   "html": "entry-1.html",
+   "width": 2400,
+   "height": 1800,
+   "scale": 1,
+   "detail": "entry-1-detail.html",
+   "detail_width": 1600,
+   "detail_height": 7543,
+   "title": "Missio redesign: homepage, service page + strategy",
+   "description": "Built on your own logo: Missio's five connected nodes become the whole system, four engines meeting in one supporter record, set in bold Bricolage Grotesque + Inter with your teal #02647E, amber #F2A73D and warm paper kept, just pushed harder. Inside: hi-fi homepage and Growth Engine service page (desktop + 7 mobile screens), mega-menu and sitemap proving any page in 2 clicks, mood board, style guide, wireframes, copy direction, 3 new offerings (Launch 30, Campaign Sprint, Mission Desk) with positioning, dev handover, heuristic review and a 4-week plan, all with your real missio-qa content. On award: responsive HTML/CSS for every screen, design tokens, SVG logo and icons, PNG/JPG in every size and the font list. Unlimited revisions: any change (colour, font, layout, text) delivered within a few hours. Rate or comment and I will revise.\nLive prototype: {{LIVE_URL}}\nSource: {{REPO_URL}}",
+   "pdf": false
+  }
+ ]
+}

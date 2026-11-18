@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Missio — Run your mission, not your software stack</title>
+<link rel="stylesheet" href="missio.css">
+<style>
+.avp{background:#fff !important;padding:0;overflow:hidden;box-shadow:0 0 0 2px #fff,0 0 0 3.5px rgba(181,77,46,.55)}
+.avp img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+/* =================== HERO =================== */
+.hero{position:relative;background:var(--night);color:var(--paper);overflow:hidden;height:900px}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(760px 560px at 80% 68%, rgba(2,100,126,.62), transparent 70%),
+  radial-gradient(520px 380px at 96% 8%, rgba(79,179,204,.14), transparent 70%),
+  radial-gradient(900px 500px at 10% 110%, rgba(242,167,61,.10), transparent 70%);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(242,237,228,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(242,237,228,.035) 1px,transparent 1px);
+  background-size:80px 80px;mask-image:radial-gradient(900px 600px at 70% 60%,#000 20%,transparent 75%)}
+.hero .wrap{position:relative;z-index:2}
+.hero-top{padding-top:40px}
+.hero h1{font-size:106px;line-height:.93;letter-spacing:-.038em;margin-top:22px;color:var(--paper)}
+.hero h1 .l2{display:block;color:#5F8F9A}
+.hero h1 .l2 em{font-style:normal;color:var(--paper);position:relative}
+.hero h1 .hl{color:var(--amber)}
+.hero-row{display:grid;grid-template-columns:520px 1fr;gap:40px;margin-top:34px}
+.hero .lead{color:rgba(242,237,228,.74);font-size:19.5px;max-width:500px}
+.hero .lead strong{color:var(--paper);font-weight:600}
+.ctas{display:flex;gap:14px;margin-top:30px}
+.checks{display:flex;gap:22px;margin-top:28px;font-size:14.5px;color:rgba(242,237,228,.78)}
+.checks span{display:flex;align-items:center;gap:8px}
+.checks i{width:20px;height:20px;border-radius:50%;background:rgba(242,167,61,.16);display:grid;place-items:center;color:var(--amber)}
+.checks i svg{width:11px;height:11px}
+
+/* stage — the logo's M becomes the product: four engines, one record */
+.stage{position:relative;height:400px;margin-right:-80px}
+.stage svg.graph{position:absolute;left:0;top:0;width:800px;height:400px;overflow:visible}
+.rec{position:absolute;left:206px;top:68px;width:368px;border-radius:22px;background:#fff;color:var(--ink);
+  box-shadow:0 0 0 1px rgba(255,255,255,.4),0 30px 60px -10px rgba(0,0,0,.5),0 0 90px rgba(79,179,204,.28);
+  transform:perspective(1600px) rotateY(-8deg) rotateX(4deg);transform-origin:50% 50%;overflow:hidden}
+.rec-h{display:flex;align-items:center;gap:12px;padding:16px 18px 13px;border-bottom:1px solid var(--line)}
+.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:700 15px/1 var(--text);color:#fff;flex:none}
+.rec-h .nm{font:700 17px/1.1 var(--text);letter-spacing:-.01em}
+.rec-h .sub{font-size:12px;white-space:nowrap;color:var(--muted);margin-top:4px}
+.rec-h .one{white-space:nowrap;margin-left:auto;font:700 10.5px/1 var(--text);letter-spacing:.12em;color:var(--teal);background:rgba(2,100,126,.08);padding:7px 9px;border-radius:999px}
+.tl-list{padding:4px 18px 10px}
+.tl-it{display:grid;grid-template-columns:14px 1fr auto;gap:12px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+.tl-it:last-child{border-bottom:0}
+.tl-it .ring{width:12px;height:12px;border-radius:50%;border:3px solid}
+.tl-it .t{font:600 14px/1.25 var(--text)}
+.tl-it .t small{display:block;font:400 12px/1.3 var(--text);color:var(--muted);margin-top:2px;white-space:nowrap}
+.tl-it .etag{font:600 10.5px/1 var(--text);letter-spacing:.06em;text-transform:uppercase;padding:6px 8px;border-radius:6px}
+.mira-flag{margin:0 12px 12px;padding:11px 13px;border-radius:14px;background:var(--night);color:var(--paper);display:flex;gap:12px;align-items:center}
+.mira-flag .spark{width:30px;height:30px;border-radius:9px;background:linear-gradient(140deg,var(--amber),#F7C877);display:grid;place-items:center;color:var(--night);flex:none}
+.mira-flag p{font-size:12.5px;line-height:1.35;color:rgba(242,237,228,.8)}
+.mira-flag p b{color:var(--paper);font-weight:600}
+
+.node{position:absolute;display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:999px;background:rgba(9,52,63,.78);
+  border:1px solid rgba(242,237,228,.16);backdrop-filter:blur(8px);box-shadow:0 10px 30px rgba(0,0,0,.25);white-space:nowrap}
+.node .rg{width:30px;height:30px;border-radius:50%;border:7px solid;flex:none;box-shadow:0 0 24px currentColor}
+.node.rev{flex-direction:row-reverse;padding:8px 8px 8px 14px;text-align:right}
+.node b{display:block;font:600 14px/1.1 var(--text);color:var(--paper)}
+.node small{display:block;font:500 11.5px/1.2 var(--text);color:rgba(242,237,228,.6);margin-top:3px}
+.toast{position:absolute;background:#fff;color:var(--ink);border-radius:14px;padding:11px 14px;display:flex;gap:10px;align-items:center;
+  box-shadow:0 20px 40px -10px rgba(0,0,0,.45);font-size:13px;white-space:nowrap}
+.toast b{font-weight:700}
+.toast .ic{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;flex:none}
+.blur1{filter:blur(.6px);opacity:.92}
+
+/* trust strip */
+.trust{position:absolute;left:0;right:0;bottom:0;z-index:2;border-top:1px solid var(--line-dark);background:rgba(4,30,37,.55);backdrop-filter:blur(6px)}
+.trust .wrap{display:flex;align-items:center;gap:40px;height:96px}
+.trust .lbl{font:600 11px/1.45 var(--text);letter-spacing:.14em;text-transform:uppercase;color:rgba(242,237,228,.55);width:250px;flex:none;white-space:nowrap}
+.trust .names{display:flex;gap:24px;align-items:center;font:700 16px/1 var(--display);letter-spacing:-.01em;color:rgba(242,237,228,.62);white-space:nowrap}
+.trust .names span{display:flex;align-items:center;gap:24px}
+.trust .names span::after{content:"";width:6px;height:6px;border-radius:50%;border:1.5px solid rgba(242,237,228,.35)}
+.trust .names span:last-child::after{display:none}
+
+/* =================== 01 PROBLEM =================== */
+.problem{background:var(--paper)}
+.problem .grid{display:grid;grid-template-columns:1fr 560px;gap:80px;align-items:center}
+.problem h2 .tl{display:block;margin-top:10px}
+.problem .lead{margin-top:24px;max-width:600px;font-size:18px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:36px;border-top:1.5px solid var(--ink)}
+.stats div{padding:22px 20px 0 0}
+.stats b{display:block;font:800 44px/1 var(--display);letter-spacing:-.03em}
+.stats span{display:block;font-size:14px;color:var(--muted);margin-top:8px;line-height:1.35}
+.calc{background:#fff;border-radius:28px;box-shadow:var(--e2);border:1px solid var(--line);overflow:hidden}
+.calc-h{padding:24px 28px 8px;display:flex;justify-content:space-between;align-items:baseline}
+.calc-h b{font:700 18px/1.2 var(--text);letter-spacing:-.01em}
+.calc-h small{font-size:12px;color:var(--muted)}
+.tools{padding:8px 28px 18px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tool{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);font-size:14px;font-weight:500}
+.tool .bx{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line-strong);display:grid;place-items:center;flex:none}
+.tool.on{background:rgba(2,100,126,.05);border-color:rgba(2,100,126,.3)}
+.tool.on .bx{background:var(--teal);border-color:var(--teal);color:#fff}
+.tool .bx svg{width:11px;height:11px}
+.tool em{font-style:normal;margin-left:auto;color:var(--muted);font-size:12.5px;font-variant-numeric:tabular-nums}
+.calc-r{background:var(--night);color:var(--paper);padding:22px 28px 24px;display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:16px;align-items:end}
+.calc-r small{display:block;font-size:12px;color:rgba(242,237,228,.6);margin-bottom:6px}
+.calc-r .v{font:700 26px/1 var(--text);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.calc-r .v s{color:rgba(242,237,228,.5);text-decoration-thickness:2px}
+.calc-r .keep .v{font-size:38px;color:var(--amber)}
+.calc-f{padding:14px 28px;background:#0A3540;color:rgba(242,237,228,.7);font-size:12.5px;display:flex;justify-content:space-between}
+.calc-f b{color:var(--paper);font-weight:600}
+
+/* =================== 02 ENGINES =================== */
+.engines{background:#fff}
+.eng-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.eng{position:relative;border-radius:28px;padding:34px 34px 30px;background:var(--paper-2);border:1px solid var(--line);overflow:hidden;min-height:420px;display:grid;grid-template-columns:1fr 250px;gap:26px}
+.eng .tag{display:flex;align-items:center;gap:10px;font:600 12px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.eng .tag .rg{width:16px;height:16px;border-radius:50%;border:4px solid}
+.eng h3{font:800 34px/1 var(--display);letter-spacing:-.03em;margin-top:22px}
+.eng h3 span{display:block;font:600 14px/1 var(--text);letter-spacing:0;color:var(--muted);margin-top:10px}
+.eng .say{font:600 19px/1.32 var(--text);letter-spacing:-.01em;margin-top:20px;color:var(--ink)}
+.eng .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+.eng .chip{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.eng .more{position:absolute;left:34px;bottom:30px}
+.eng .ui{align-self:stretch;position:relative}
+.mini{background:#fff;border-radius:18px;box-shadow:var(--e2);border:1px solid var(--line);padding:16px;font-size:12.5px}
+.mini .mh{display:flex;justify-content:space-between;align-items:center;font:600 11px/1 var(--text);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.amts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}
+.amts span{border:1px solid var(--line-strong);border-radius:9px;text-align:center;padding:9px 0;font:600 14px/1 var(--text)}
+.amts span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mini .give{background:var(--amber);border-radius:10px;text-align:center;padding:11px;font:700 13.5px/1 var(--text)}
+.mini .ttl{font:800 17px/1.15 var(--display);letter-spacing:-.02em}
+.typing{display:flex;align-items:center;gap:8px;margin-top:12px;padding:9px 10px;border-radius:10px;background:rgba(242,167,61,.14);font-size:12px;color:#8A5A12;font-weight:600}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--amber)}
+.rowp{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.rowp:last-child{border-bottom:0}
+.rowp .av{width:28px;height:28px;font-size:10.5px}
+.rowp b{font-weight:600;font-size:13px;display:block}
+.rowp small{color:var(--muted);font-size:11.5px}
+.rowp .st{margin-left:auto;font:600 11px/1 var(--text);padding:5px 8px;border-radius:6px}
+.shift{display:grid;grid-template-columns:44px 1fr;gap:8px;align-items:center;padding:6px 0}
+.shift .tm{font:600 11.5px/1 var(--text);color:var(--muted);font-variant-numeric:tabular-nums}
+.shift .bar{height:30px;border-radius:8px;display:flex;align-items:center;padding:0 10px;font-size:12px;font-weight:600;gap:6px}
+.stack-av{display:flex;margin-left:auto}
+.stack-av i{width:18px;height:18px;border-radius:50%;border:2px solid #fff;margin-left:-6px}
+.ledger{font-variant-numeric:tabular-nums}
+.ledger .lr{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line);font-size:12.5px}
+.ledger .lr b{font-weight:600}
+.sync{margin-top:10px;display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;background:rgba(47,165,140,.12);color:#1F7563;font:600 12px/1 var(--text)}
+
+
+.eng-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.eng4{display:flex;flex-direction:column;border-radius:28px;padding:26px 24px 26px;background:var(--tint);border:1px solid rgba(22,38,45,.07)}
+.eng4 .top{display:flex;justify-content:space-between;align-items:center}
+.eng4 .no{font:600 12px/1 var(--text);letter-spacing:.16em;color:var(--muted)}
+.eng4 .rg{width:24px;height:24px;border-radius:50%;border:6.5px solid var(--c)}
+.eng4 h3{font:800 42px/1 var(--display);letter-spacing:-.04em;margin-top:30px}
+.eng4 .sub{font:600 11.5px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px}
+.eng4 .say{font:600 17px/1.35 var(--text);letter-spacing:-.01em;margin-top:16px;min-height:46px}
+.eng4 .mini{margin-top:20px}
+.eng4 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px}
+.eng4 .chip{background:rgba(255,255,255,.7);color:var(--ink);height:27px;font-size:12px;padding:0 10px}
+.eng4 .more{margin-top:22px;align-self:flex-start}
+/* MIRA band */
+.mira{margin-top:20px;border-radius:32px;background:var(--night);color:var(--paper);padding:48px 52px;display:grid;grid-template-columns:1fr 560px;gap:56px;position:relative;overflow:hidden}
+.mira::before{content:"";position:absolute;inset:0;background:radial-gradient(500px 360px at 85% 40%,rgba(242,167,61,.16),transparent 70%),radial-gradient(600px 400px at 10% 100%,rgba(2,100,126,.5),transparent 70%)}
+.mira > *{position:relative}
+.mira h3{font:800 46px/1.02 var(--display);letter-spacing:-.035em;margin-top:22px}
+.mira p.lead{color:rgba(242,237,228,.72);margin-top:20px;font-size:18px}
+.mira .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.chat{background:rgba(242,237,228,.06);border:1px solid rgba(242,237,228,.12);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.chat .ch{display:flex;justify-content:space-between;font:600 12px/1 var(--text);color:rgba(242,237,228,.6);letter-spacing:.06em;text-transform:uppercase;padding-bottom:12px;border-bottom:1px solid rgba(242,237,228,.1)}
+.chat .ch span{color:var(--sky)}
+.bub{max-width:82%;padding:13px 16px;border-radius:18px;font-size:15px;line-height:1.4}
+.bub small{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.6;margin-bottom:5px;font-weight:600}
+.bub.me{align-self:flex-end;background:var(--paper);color:var(--ink);border-bottom-right-radius:6px}
+.bub.ai{background:rgba(2,100,126,.55);border:1px solid rgba(79,179,204,.3);border-bottom-left-radius:6px}
+.bub.ai.warn{background:rgba(242,167,61,.14);border-color:rgba(242,167,61,.4)}
+.bub.ai.warn b{color:var(--amber)}
+
+/* =================== 03 COMPARISON =================== */
+.compare{background:var(--night);color:var(--paper);position:relative;overflow:hidden}
+.compare .sec-head p{color:rgba(242,237,228,.7)}
+.tbl{border-radius:28px;border:1px solid var(--line-dark);overflow:hidden;background:rgba(242,237,228,.02)}
+.tr{display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr 1.15fr;align-items:center}
+.tr > div{padding:17px 24px;font-size:15px;border-bottom:1px solid var(--line-dark)}
+.tr:last-child > div{border-bottom:0}
+.th > div{font:600 12px/1.2 var(--text);letter-spacing:.12em;text-transform:uppercase;color:rgba(242,237,228,.55);padding-top:22px;padding-bottom:22px}
+.tr > div:first-child{font-weight:600;color:var(--paper)}
+.tr .no{color:rgba(242,237,228,.42)}
+.tr .mid{color:rgba(242,237,228,.72)}
+.tr .ms{background:rgba(242,167,61,.1);color:var(--paper);font-weight:600;display:flex;align-items:center;gap:10px;border-left:1px solid rgba(242,167,61,.35)}
+.th .ms{background:var(--amber);color:var(--ink);font-family:var(--display);font-size:20px;letter-spacing:-.01em;text-transform:none;font-weight:800}
+.tr .ms i{width:20px;height:20px;border-radius:50%;background:var(--amber);color:var(--ink);display:grid;place-items:center;flex:none}
+.tr .ms i svg{width:11px;height:11px}
+.foot-note{font-size:13px;color:rgba(242,237,228,.5);margin-top:20px}
+.cmp-pick{display:none}
+
+/* =================== 04 AUDIENCES =================== */
+.aud{background:var(--paper)}
+.aud-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;gap:18px}
+.au{background:#fff;border-radius:24px;padding:26px 24px 24px;border:1px solid var(--line);display:flex;flex-direction:column;min-height:286px}
+.au h4{font-size:23px}
+.au.ask{background:var(--night);color:var(--paper);border-color:var(--night)}
+.au.ask p{color:rgba(242,237,228,.72)}
+.au.ask .btn{margin-top:auto;align-self:flex-start}
+.au .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:var(--paper);color:var(--teal)}
+.au .ic svg{width:26px;height:26px}
+.au h4{font:800 25px/1.1 var(--display);letter-spacing:-.025em;margin-top:22px}
+.au p{font-size:15px;color:var(--muted);margin-top:10px;line-height:1.5}
+.au .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:20px}
+.au .chip{height:27px;font-size:12px}
+.au.feat{grid-row:span 2;justify-content:flex-end;background:linear-gradient(180deg,rgba(2,100,126,0) 22%,rgba(2,100,126,.8) 52%,#02647E 66%),url(../assets/nonprofit-benefits.jpg) 30% 0/auto 76% no-repeat,#02647E;color:#fff;border-color:var(--teal)}
+.au.feat .chips{margin-top:0;padding-top:20px}
+.au.feat p{color:rgba(255,255,255,.78)}
+.au.feat .ic{background:var(--amber);color:var(--ink)}
+.au.feat .chip{background:rgba(255,255,255,.12);color:#fff}
+
+/* =================== 05 SWITCH =================== */
+.switch{background:#fff}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative}
+.steps::before{content:"";position:absolute;left:30px;right:30px;top:30px;height:2px;background:repeating-linear-gradient(90deg,var(--teal) 0 10px,transparent 10px 18px);opacity:.5}
+.step{position:relative}
+.step .rg{display:block;width:60px;height:60px;border-radius:50%;border:13px solid var(--teal);background:#fff;position:relative;z-index:1}
+.step:nth-child(2) .rg{border-color:var(--amber)}
+.step:nth-child(3) .rg{border-color:var(--sky)}
+.step .meta{font:600 12.5px/1 var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:30px}
+.step h4{font:800 30px/1.05 var(--display);letter-spacing:-.03em;margin-top:14px}
+.step p{font-size:16px;color:var(--muted);margin-top:14px;max-width:360px}
+.step .proof{margin-top:22px;display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:var(--paper);font:600 13.5px/1 var(--text)}
+.vs{margin-top:56px;display:grid;grid-template-columns:auto 1fr 1fr;border-radius:22px;overflow:hidden;border:1px solid var(--line)}
+.vs > div{padding:22px 28px;font-size:15px;display:flex;align-items:center;gap:16px}
+.vs .k{font:600 12px/1.3 var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--paper-2)}
+.vs .them{color:var(--muted);border-left:1px solid var(--line)}
+.vs .us{background:var(--night);color:var(--paper)}
+.vs b{font:800 28px/1 var(--display);letter-spacing:-.02em;white-space:nowrap}
+.vs .us b{color:var(--amber)}
+
+/* =================== 06 SERVICES =================== */
+.svc{background:var(--teal);color:#fff;position:relative;overflow:hidden}
+.svc .eyebrow{color:var(--amber)}
+.svc .eyebrow b{color:#fff}
+.svc .sec-head p{color:rgba(255,255,255,.78)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative}
+.sv{background:#fff;color:var(--ink);border-radius:26px;padding:32px;display:flex;flex-direction:column;min-height:372px;position:relative}
+.sv .new{position:absolute;top:28px;right:28px;font:700 11px/1 var(--text);letter-spacing:.12em;background:var(--amber);padding:7px 10px;border-radius:999px}
+.sv .kind{font:600 12px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.sv h4{font:800 36px/1 var(--display);letter-spacing:-.035em;margin-top:18px}
+.sv .pitch{font:600 17px/1.35 var(--text);margin-top:14px}
+.sv ul{list-style:none;margin-top:18px;display:flex;flex-direction:column;gap:9px}
+.sv li{display:flex;gap:10px;font-size:14.5px;color:var(--muted);line-height:1.4}
+.sv li i{width:18px;height:18px;border-radius:50%;background:rgba(2,100,126,.1);color:var(--teal);display:grid;place-items:center;flex:none;margin-top:1px}
+.sv li i svg{width:10px;height:10px}
+.sv .bot{margin-top:auto;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.sv .bot small{font-size:13px;color:var(--muted)}
+.sv.dark{background:var(--night);color:var(--paper)}
+.sv.dark .kind{color:var(--sky)}
+.sv.dark li{color:rgba(242,237,228,.72)}
+.sv.dark li i{background:rgba(79,179,204,.16);color:var(--sky)}
+.sv.dark .bot{border-color:var(--line-dark)}
+.sv.dark .bot small{color:rgba(242,237,228,.6)}
+.sv.dark .link-arrow{color:var(--amber)}
+
+/* =================== 07 PROOF =================== */
+.proof-sec{background:var(--paper)}
+.proof-grid{display:grid;grid-template-columns:1fr 420px;gap:64px;align-items:start}
+.qmark{display:block;width:60px;height:47px;color:var(--amber)}
+.quote{font:700 46px/1.1 var(--display);letter-spacing:-.03em;margin-top:22px}
+.who{display:flex;align-items:center;gap:16px;margin-top:34px}
+.who .av{width:56px;height:56px;font-size:18px;background:var(--rust)}
+.who b{display:block;font-size:17px}
+.who small{font-size:14.5px;color:var(--muted)}
+.statc{display:flex;flex-direction:column;gap:16px}
+.st-card{border-radius:22px;padding:24px 26px;background:#fff;border:1px solid var(--line)}
+.st-card b{display:block;font:800 52px/1 var(--display);letter-spacing:-.04em}
+.st-card p{font-size:15px;color:var(--muted);margin-top:8px;line-height:1.45}
+.st-card small{display:block;font-size:11.5px;color:var(--muted);opacity:.8;margin-top:8px}
+.st-card.t{background:var(--night);color:var(--paper);border-color:var(--night)}
+.st-card.t b{color:var(--amber)}
+.st-card.t p{color:rgba(242,237,228,.72)}
+
+/* =================== 08 OBJECTIONS =================== */
+.obj{background:#fff}
+.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.objs{display:flex;flex-direction:column}
+.ob{display:grid;grid-template-columns:54px 1fr 40px;align-items:center;padding:24px 0;border-top:1px solid var(--line)}
+.ob:last-child{border-bottom:1px solid var(--line)}
+.ob .n{font:600 13px/1 var(--text);color:var(--muted);letter-spacing:.1em}
+.ob q{font:700 21px/1.3 var(--text);letter-spacing:-.015em;quotes:"\201C" "\201D"}
+.ob .pm{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line-strong);display:grid;place-items:center;font-size:18px;color:var(--muted)}
+.ob.open q{color:var(--teal)}
+.ob.open .pm{background:var(--teal);border-color:var(--teal);color:#fff}
+.mr{border-radius:28px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--e2)}
+.mr > div{padding:30px 34px}
+.mr small{font:700 11.5px/1 var(--text);letter-spacing:.16em;text-transform:uppercase}
+.mr p{font-size:17px;line-height:1.55;margin-top:12px}
+.mr .myth{background:var(--paper-2)}
+.mr .myth small{color:var(--rust)}
+.mr .myth p{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(181,77,46,.45);text-decoration-thickness:1.5px}
+.mr .real{background:var(--night);color:var(--paper)}
+.mr .real small{color:var(--amber)}
+.mr .real p{font-size:19px;color:var(--paper)}
+
+/* =================== CTA =================== */
+.cta{background:var(--amber);position:relative;overflow:hidden}
+.cta .wrap{display:grid;grid-template-columns:1fr 440px;gap:64px;align-items:center;padding-top:96px;padding-bottom:96px}
+.cta h2{font-size:84px;line-height:.94;letter-spacing:-.045em}
+.cta p{font-size:20px;margin-top:24px;max-width:560px;color:rgba(22,38,45,.78)}
+.cta .ctas{margin-top:36px}
+.book{background:#fff;border-radius:26px;padding:26px;box-shadow:0 30px 60px -20px rgba(80,45,0,.35);transform:rotate(2deg)}
+.book .bh{display:flex;align-items:center;gap:12px}
+.book .bh .av{background:var(--teal);width:40px;height:40px;font-size:13px}
+.book .bh b{font-size:15px;display:block}
+.book .bh small{font-size:12.5px;color:var(--muted)}
+.cal{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:20px;text-align:center}
+.cal span{font:600 11px/1 var(--text);color:var(--muted);letter-spacing:.06em;padding:4px 0}
+.cal i{font-style:normal;font:600 15px/1 var(--text);padding:11px 0;border-radius:10px;background:var(--paper-2);font-variant-numeric:tabular-nums}
+.cal i.on{background:var(--ink);color:#fff}
+.slots{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.slots span{padding:10px 14px;border-radius:10px;border:1px solid var(--line-strong);font:600 13.5px/1 var(--text);font-variant-numeric:tabular-nums}
+.slots span.on{border-color:var(--teal);background:rgba(2,100,126,.08);color:var(--teal)}
+.book .go{margin-top:18px;background:var(--teal);color:#fff;border-radius:12px;padding:14px;text-align:center;font:600 14.5px/1 var(--text)}
+.book .note{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+
+/* =================== mega menu (state: #mega) =================== */
+.mega{display:none;position:absolute;left:80px;right:80px;top:84px;z-index:40;background:#fff;color:var(--ink);border-radius:26px;box-shadow:0 40px 80px -20px rgba(0,0,0,.5);padding:28px;grid-template-columns:1fr 1fr 300px;gap:10px}
+.mega-on .mega{display:grid}
+.mega-on .hero .stage,.mega-on .hero .hero-row{filter:blur(2px);opacity:.5}
+.mega .col h6{font:600 11.5px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:6px 14px 14px}
+.mi{display:grid;grid-template-columns:42px 1fr;gap:14px;padding:13px 14px;border-radius:16px;align-items:center}
+.mi.on{background:var(--paper-2)}
+.mi .rg{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--paper)}
+.mi .rg i{width:18px;height:18px;border-radius:50%;border:5px solid}
+.mi b{font:700 16px/1.2 var(--text);letter-spacing:-.01em;display:flex;gap:8px;align-items:center}
+.mi small{font-size:13.5px;color:var(--muted);line-height:1.35;display:block;margin-top:3px}
+.mi .k{font:600 10px/1 var(--text);letter-spacing:.08em;padding:4px 6px;border-radius:5px;background:rgba(242,167,61,.2);color:#8A5A12}
+.feat{border-radius:20px;background:var(--night);color:var(--paper);padding:22px;display:flex;flex-direction:column}
+.feat .vid{height:150px;border-radius:14px;background:linear-gradient(135deg,#0B3742,#02647E);position:relative;display:grid;place-items:center;overflow:hidden}
+.feat .vid img{width:62%;opacity:.95}
+.feat .vid .pl{position:absolute;right:14px;bottom:14px;width:44px;height:44px;border-radius:50%;background:var(--amber);display:grid;place-items:center;color:var(--ink)}
+.feat b{font:800 21px/1.1 var(--display);letter-spacing:-.02em;margin-top:18px}
+.feat small{font-size:13.5px;color:rgba(242,237,228,.68);margin-top:8px;line-height:1.4}
+.mega .bar{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding:16px 14px 2px;margin-top:6px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.mega .bar b{color:var(--ink)}
+
+/* =================== mobile =================== */
+.m-sticky{display:none}
+@media (max-width:760px){
+  .hero{height:auto;padding-bottom:0}
+  .hero::after{display:none}
+  .hero-top{padding-top:22px}
+  .hero .eyebrow{font-size:11px}
+  .hero h1{font-size:50px;margin-top:16px;line-height:.96;letter-spacing:-.035em}
+  .hero h1 .l2{display:inline}
+  .hero-row{grid-template-columns:1fr;margin-top:18px;gap:0}
+  .hero .lead{font-size:16px;line-height:1.5}
+  .ctas{flex-direction:column;gap:10px;margin-top:22px}
+  .ctas .btn{justify-content:space-between;width:100%}
+  .ctas .btn-ghost-d{justify-content:center;gap:12px}
+  .checks{gap:14px;margin-top:18px;font-size:12.5px;flex-wrap:wrap}
+  .checks i{width:17px;height:17px}
+  .stage{height:auto;margin:30px 0 0;padding-bottom:110px}
+  .stage svg.graph,.stage .node{display:none}
+  .stage::before{content:"Growth · Relationship · Execution · Revenue";display:block;font:600 11px/1 var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-bottom:14px}
+  .rec{position:relative;left:0;top:0;width:100%;transform:none}
+  .trust,.mega{display:none}
+  .sec-head{grid-template-columns:1fr}
+  .problem .grid,.proof-grid,.cta .wrap,.mira{grid-template-columns:1fr}
+  .eng-grid,.aud-grid,.steps,.svc-grid{grid-template-columns:1fr}
+  .cmp-pick{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;font:500 14px/1 var(--text);color:rgba(242,237,228,.7)}
+  .cmp-pick span{display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border-radius:999px;border:1px solid rgba(242,237,228,.25);color:var(--paper);font-weight:600}
+  .tr{grid-template-columns:1.25fr 1fr 1.1fr}
+  .tr > div:nth-child(3),.tr > div:nth-child(4){display:none}
+  .tr > div{padding:14px 12px;font-size:13.5px}
+  .th > div{font-size:10.5px;padding-top:16px;padding-bottom:16px}
+  .th .ms{font-size:16px}
+  .tr .ms{gap:8px}
+  .tr .ms i{width:18px;height:18px}
+  .vs{grid-template-columns:1fr}
+  .m-sticky{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:60;background:var(--ink);color:#fff;border-radius:999px;padding:7px 7px 7px 20px;align-items:center;justify-content:space-between;box-shadow:0 14px 30px rgba(0,0,0,.35);border:1px solid rgba(242,237,228,.14)}
+  .m-sticky span{font:600 14px/1.2 var(--text)}
+  .m-sticky small{display:block;font-weight:400;font-size:12px;opacity:.7}
+}
+/* mobile menu (state: #menu) */
+.mmenu{display:none}
+@media (max-width:760px){
+  .menu-on .mmenu{display:block;position:fixed;inset:0;z-index:80;background:var(--paper);color:var(--ink);overflow:hidden}
+  .menu-on .m-sticky{display:none}
+  .mm-top{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid var(--line)}
+  .mm-top img{height:21px}
+  .mm-x{width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:22px}
+  .mm-body{padding:18px 20px 0}
+  .mm-h{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:14px 0 10px;display:flex;justify-content:space-between}
+  .mm-h span{letter-spacing:.04em;text-transform:none;color:var(--teal)}
+  .mm-eng{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .mm-eng a{background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:flex;flex-direction:column;gap:8px}
+  .mm-eng a i{width:16px;height:16px;border-radius:50%;border:4px solid}
+  .mm-eng a b{font:700 15px/1.15 var(--text);letter-spacing:-.01em}
+  .mm-eng a small{font-size:12px;color:var(--muted);line-height:1.3}
+  .mm-pills{display:flex;flex-wrap:wrap;gap:7px}
+  .mm-pills a{padding:10px 13px;border-radius:999px;background:#fff;border:1px solid var(--line);font:600 13.5px/1 var(--text)}
+  .mm-list a{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);font:700 20px/1 var(--display);letter-spacing:-.02em}
+  .mm-list a span{font:500 12px/1 var(--text);color:var(--muted);letter-spacing:0}
+  .mm-cta{position:absolute;left:20px;right:20px;bottom:20px;display:grid;grid-template-columns:1fr auto;gap:8px}
+  .mm-cta .btn{justify-content:space-between}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="arr" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="chev" viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="chk" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="play" viewBox="0 0 12 12"><path d="M4 2.5v7l5.5-3.5z" fill="currentColor"/></symbol>
+    <symbol id="spark" viewBox="0 0 16 16"><path d="M8 1.5l1.6 4.3 4.4 1.7-4.4 1.7L8 13.5 6.4 9.2 2 7.5l4.4-1.7z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============================== HERO ============================== -->
+<header class="hero on-dark">
+  <nav class="nav nav-dark">
+    <div class="wrap">
+      <a href="home.html"><img class="logo" src="../assets/missio-logo-cream.svg" alt="Missio"></a>
+      <ul>
+        <li class="on" data-mega style="cursor:pointer">Platform <svg><use href="#chev"/></svg></li>
+        <li>Who it’s for <svg><use href="#chev"/></svg></li>
+        <li>Services <svg><use href="#chev"/></svg></li>
+        <li>Why Missio</li>
+        <li>Pricing</li>
+        <li>Resources <svg><use href="#chev"/></svg></li>
+      </ul>
+      <div class="right">
+        <span class="hide-m" style="opacity:.86">Log in</span>
+        <a class="btn btn-amber btn-sm hide-m">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a>
+        <span class="burger"><svg width="18" height="12" viewBox="0 0 18 12"><path d="M1 1h16M1 6h16M1 11h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- mega menu: Platform (2 clicks to any engine) -->
+  <div class="mega">
+    <div class="col">
+      <h6>Four engines · one record</h6>
+      <a href="growth-engine.html" class="mi on"><span class="rg"><i style="border-color:var(--growth)"></i></span><div><b>Growth Engine</b><small>Website, donation pages, events, forms, email &amp; SMS</small></div></a>
+      <div class="mi"><span class="rg"><i style="border-color:var(--relation)"></i></span><div><b>Relationship Engine</b><small>Donor CRM, shared timeline, moves management</small></div></div>
+      <div class="mi"><span class="rg"><i style="border-color:var(--execution)"></i></span><div><b>Execution Engine</b><small>Hiring, onboarding, scheduling, time tracking</small></div></div>
+      <div class="mi"><span class="rg"><i style="border-color:var(--revenue)"></i></span><div><b>Revenue Engine</b><small>Giving, pledges, invoicing, QuickBooks sync</small></div></div>
+    </div>
+    <div class="col">
+      <h6>Intelligence &amp; proof</h6>
+      <div class="mi"><span class="rg" style="background:var(--night);color:var(--amber)"><svg width="18" height="18"><use href="#spark"/></svg></span><div><b>MIRA AI <span class="k">ALL 4 ENGINES</span></b><small>Drafts appeals, flags major gifts, answers in plain English</small></div></div>
+      <div class="mi"><span class="rg"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M3 15V9m5 6V5m5 10v-4m4 4V7" stroke="#02647E" stroke-width="2.2" stroke-linecap="round"/></svg></span><div><b>Compare Missio</b><small>What legacy, enterprise and marketing CRMs leave out</small></div></div>
+      <div class="mi"><span class="rg"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 4h12v12H4zM4 8h12M8 8v8" fill="none" stroke="#02647E" stroke-width="1.8"/></svg></span><div><b>Integrations</b><small>50+ ready-made, 5,000+ apps via Zapier</small></div></div>
+      <div class="mi"><span class="rg"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 2.5l6 2.5v4.6c0 3.9-2.6 6.6-6 7.9-3.4-1.3-6-4-6-7.9V5z" fill="none" stroke="#02647E" stroke-width="1.8"/></svg></span><div><b>Security &amp; procurement</b><small>Every answer in writing, before you sign</small></div></div>
+    </div>
+    <div class="feat">
+      <div class="vid"><img src="../assets/missio-mark-cream.svg" alt=""><span class="pl"><svg width="14" height="14"><use href="#play"/></svg></span></div>
+      <b>Watch one gift move through every engine</b>
+      <small>The whole platform in 1:36 — without a single export.</small>
+    </div>
+    <div class="bar"><span>Not sure where to start? <b>Book a 45-minute stack audit</b> — no commitment.</span><span class="link-arrow">Let’s talk <svg width="14" height="14"><use href="#arr"/></svg></span></div>
+  </div>
+
+  <div class="wrap hero-top">
+    <span class="eyebrow"><span class="ring"></span>One login <b>·</b> Endless impact</span>
+    <h1 class="d1">Run your <span class="hl">mission,</span><span class="l2"> not your software stack.</span></h1>
+    <div class="hero-row">
+      <div>
+        <p class="lead">Missio puts fundraising, donors, events, volunteers, staff and the books on <strong>one login</strong> — four connected engines that share one record for every person in your mission.</p>
+        <div class="ctas">
+          <a class="btn btn-amber">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a>
+          <a class="btn btn-ghost-d"><span class="play"><svg width="10" height="10"><use href="#play"/></svg></span>Watch the 2-min overview</a>
+        </div>
+        <div class="checks">
+          <span><i><svg><use href="#chk"/></svg></i>Migration included</span>
+          <span><i><svg><use href="#chk"/></svg></i>No IT department</span>
+          <span><i><svg><use href="#chk"/></svg></i>Live in days</span>
+        </div>
+      </div>
+
+      <div class="stage">
+        <svg class="graph" viewBox="0 0 800 400">
+          <defs>
+            <linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#F2A73D"/><stop offset=".5" stop-color="#4FB3CC"/><stop offset="1" stop-color="#2FA58C"/></linearGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>
+          </defs>
+          <!-- the Missio M: Growth → Relationship → one record → Execution → Revenue -->
+          <polyline points="40,330 130,30 390,170 650,30 740,330" fill="none" stroke="url(#gl)" stroke-width="12" stroke-linejoin="round" opacity=".25" filter="url(#glow)"/>
+          <polyline points="40,330 130,30 390,170 650,30 740,330" fill="none" stroke="url(#gl)" stroke-width="2.4" stroke-linejoin="round" opacity=".95"/>
+          <polyline points="40,330 130,30 390,170 650,30 740,330" fill="none" stroke="#fff" stroke-width="2.4" stroke-dasharray="2 16" stroke-linecap="round" opacity=".5"/>
+          <circle cx="85" cy="180" r="5.5" fill="#F2A73D"/><circle cx="85" cy="180" r="14" fill="#F2A73D" opacity=".22"/>
+          <circle cx="695" cy="180" r="5.5" fill="#2FA58C"/><circle cx="695" cy="180" r="14" fill="#2FA58C" opacity=".22"/>
+        </svg>
+
+        <div class="node" style="left:17px;top:307px"><span class="rg" style="color:var(--growth);border-color:var(--growth)"></span><div><b>Growth Engine</b><small>Pages, events, email</small></div></div>
+        <div class="node" style="left:107px;top:7px"><span class="rg" style="color:var(--relation);border-color:var(--relation)"></span><div><b>Relationship Engine</b><small>One shared timeline</small></div></div>
+        <div class="node rev" style="right:127px;top:7px"><span class="rg" style="color:var(--execution);border-color:var(--execution)"></span><div><b>Execution Engine</b><small>Shifts, staff &amp; hiring</small></div></div>
+        <div class="node rev" style="right:37px;top:307px"><span class="rg" style="color:var(--revenue);border-color:var(--revenue)"></span><div><b>Revenue Engine</b><small>Gift to the books</small></div></div>
+
+        <div class="rec">
+          <div class="rec-h">
+            <span class="av avp"><img src="../assets/avatar-marcus.jpg" alt="Marcus Webb"></span>
+            <div><div class="nm">Marcus Webb</div><div class="sub">Donor · Volunteer · Gala guest</div></div>
+            <span class="one">1 RECORD</span>
+          </div>
+          <div class="tl-list">
+            <div class="tl-it"><span class="ring" style="border-color:var(--growth)"></span><div class="t">Bought 2 spring gala tickets<small>Page built in an afternoon</small></div><span class="etag" style="background:rgba(242,167,61,.16);color:#8A5A12">Growth</span></div>
+            <div class="tl-it"><span class="ring" style="border-color:var(--revenue)"></span><div class="t">Started a monthly gift<small>Synced to QuickBooks</small></div><span class="etag" style="background:rgba(47,165,140,.14);color:#1F7563">Revenue</span></div>
+            <div class="tl-it"><span class="ring" style="border-color:var(--execution)"></span><div class="t">Signed up for a Saturday shift<small>Warehouse packing team</small></div><span class="etag" style="background:rgba(224,115,79,.14);color:#A5492B">Execution</span></div>
+          </div>
+          <div class="mira-flag"><span class="spark"><svg width="15" height="15"><use href="#spark"/></svg></span><p><b>MIRA · Major-gift flag.</b> Gives after every gala, now volunteers monthly. Ask before Nov 1.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust">
+    <div class="wrap">
+      <div class="lbl">Trusted by 100+<br>mission-driven organizations</div>
+      <div class="names"><span>Team Rubicon</span><span>Lakeland Habitat for Humanity</span><span>University of South Florida</span><span>African Wildlife Foundation</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================== 01 PROBLEM ============================== -->
+<section class="sec problem">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow"><span class="ring"></span>01 <b>/</b> Why teams switch</span>
+      <h2 class="d2" style="margin-top:26px;font-size:54px;line-height:1.02">Every hour spent wrestling with software steals an hour from the mission. <span class="tl">Missio gives that time back.</span></h2>
+      <p class="lead">One login replaces the CRM, the event tool, the form builder and the spreadsheet holding them together — so your team spends less time managing software and more time with the people you serve.</p>
+      <div class="stats">
+        <div><b class="tnum">50+</b><span>ready-made integrations</span></div>
+        <div><b class="tnum">5,000+</b><span>apps connected via Zapier</span></div>
+        <div><b class="tnum">2–4 wks</b><span>migration, included — not billed hourly</span></div>
+      </div>
+    </div>
+    <div class="calc">
+      <div class="calc-h"><b>What is your stack actually costing you?</b><small>1 · Tools you pay for</small></div>
+      <div class="tools">
+        <div class="tool on"><span class="bx"><svg><use href="#chk"/></svg></span>Donor CRM<em>$12,000/yr</em></div>
+        <div class="tool on"><span class="bx"><svg><use href="#chk"/></svg></span>Events &amp; ticketing<em>$6,000/yr</em></div>
+        <div class="tool on"><span class="bx"><svg><use href="#chk"/></svg></span>Online giving pages<em>$4,200/yr</em></div>
+        <div class="tool on"><span class="bx"><svg><use href="#chk"/></svg></span>Email marketing<em>$3,600/yr</em></div>
+        <div class="tool"><span class="bx"></span>Volunteer management<em>$3,000/yr</em></div>
+        <div class="tool on"><span class="bx"><svg><use href="#chk"/></svg></span>Payment platform fees<em>$5,400/yr</em></div>
+        <div class="tool"><span class="bx"></span>HR &amp; scheduling<em>$7,200/yr</em></div>
+        <div class="tool"><span class="bx"></span>Website CMS<em>$4,800/yr</em></div>
+      </div>
+      <div class="calc-r">
+        <div><small>What you pay today</small><div class="v"><s>$31,200</s></div></div>
+        <div><small>Same work in Missio</small><div class="v">$18,000</div></div>
+        <div class="keep"><small>You keep each year</small><div class="v">$13,200</div></div>
+      </div>
+      <div class="calc-f"><span><b>+ 120 staff hours</b> a year back from moving data between systems</span><span>Illustrative estimate</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== 02 ENGINES ============================== -->
+<section class="sec engines">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow"><span class="ring"></span>02 <b>/</b> The platform</span>
+        <h2 class="d2" style="margin-top:24px">Four engines.<br>One record.<br>Built for impact.</h2>
+      </div>
+      <p class="lead">Every engine writes to the same record — so the donor who volunteers on Saturday and the staff member who runs the gala are the same person everywhere in Missio. Turn engines on when you’re ready.</p>
+    </div>
+    <div class="eng-grid">
+      <div class="eng4" style="--tint:#FBF0DE;--c:var(--growth)">
+        <div class="top"><span class="no">ENGINE 01</span><span class="rg"></span></div>
+        <h3>Growth</h3><div class="sub">Web presence</div>
+        <p class="say">Bring in support without bringing in another tool.</p>
+        <div class="mini">
+          <div class="mh"><span>Spring appeal</span><span style="color:var(--teal)">● Live</span></div>
+          <div class="ttl">Every Saturday, the warehouse fills up.</div>
+          <div class="amts"><span>$25</span><span class="on">$50</span><span>$100</span></div>
+          <div class="give">Give monthly</div>
+          <div class="typing"><i></i>MIRA is drafting the thank-you</div>
+        </div>
+        <div class="chips"><span class="chip">Website &amp; CMS</span><span class="chip">Donation pages</span><span class="chip">Events</span><span class="chip">Email &amp; SMS</span></div>
+        <a href="growth-engine.html" class="link-arrow more">Explore Growth <svg width="14" height="14"><use href="#arr"/></svg></a>
+      </div>
+      <div class="eng4" style="--tint:#E4F2F6;--c:var(--relation)">
+        <div class="top"><span class="no">ENGINE 02</span><span class="rg"></span></div>
+        <h3>Relationship</h3><div class="sub">Donor CRM &amp; comms</div>
+        <p class="say">Every donor in one view, even when staff leave.</p>
+        <div class="mini">
+          <div class="mh"><span>Moves pipeline</span><span>Q4</span></div>
+          <div class="rowp"><span class="av avp"><img src="../assets/avatar-marcus.jpg" alt="Marcus Webb"></span><div><b>Marcus Webb</b><small>Coffee before Nov 1</small></div><span class="st" style="background:rgba(242,167,61,.2);color:#8A5A12">Ask</span></div>
+          <div class="rowp"><span class="av" style="background:#02647E">AL</span><div><b>Ana López</b><small>Lapse signal</small></div><span class="st" style="background:rgba(181,77,46,.12);color:#A5492B">Re-engage</span></div>
+          <div class="rowp"><span class="av" style="background:#4FB3CC">JT</span><div><b>June Tran</b><small>Board member</small></div><span class="st" style="background:rgba(47,165,140,.14);color:#1F7563">Steward</span></div>
+        </div>
+        <div class="chips"><span class="chip">Donor CRM</span><span class="chip">Shared timeline</span><span class="chip">Moves management</span></div>
+        <a class="link-arrow more">Explore Relationship <svg width="14" height="14"><use href="#arr"/></svg></a>
+      </div>
+      <div class="eng4" style="--tint:#FAE8E1;--c:var(--execution)">
+        <div class="top"><span class="no">ENGINE 03</span><span class="rg"></span></div>
+        <h3>Execution</h3><div class="sub">HR &amp; team management</div>
+        <p class="say">The part most nonprofit systems miss: your people.</p>
+        <div class="mini">
+          <div class="mh"><span>Saturday · warehouse</span><span style="color:#A5492B">2 open</span></div>
+          <div class="shift"><span class="tm">8:00</span><span class="bar" style="background:rgba(224,115,79,.14);color:#A5492B">Packing<span class="stack-av"><i style="background:#02647E"></i><i style="background:#F2A73D"></i><i style="background:#4FB3CC"></i></span></span></div>
+          <div class="shift"><span class="tm">10:00</span><span class="bar" style="background:rgba(2,100,126,.08);color:var(--teal)">Intake desk<span class="stack-av"><i style="background:#B54D2E"></i><i style="background:#2FA58C"></i></span></span></div>
+          <div class="shift"><span class="tm">12:00</span><span class="bar" style="border:1.5px dashed rgba(224,115,79,.6);color:#A5492B">2 volunteers needed</span></div>
+        </div>
+        <div class="chips"><span class="chip">Hiring</span><span class="chip">Onboarding</span><span class="chip">Scheduling</span><span class="chip">Time tracking</span></div>
+        <a class="link-arrow more">Explore Execution <svg width="14" height="14"><use href="#arr"/></svg></a>
+      </div>
+      <div class="eng4" style="--tint:#E2F2EC;--c:var(--revenue)">
+        <div class="top"><span class="no">ENGINE 04</span><span class="rg"></span></div>
+        <h3>Revenue</h3><div class="sub">Finance &amp; reporting</div>
+        <p class="say">From the gift to the books, without the handoff.</p>
+        <div class="mini ledger">
+          <div class="mh"><span>Today’s giving</span><span>Sample</span></div>
+          <div class="lr"><span>Monthly · M. Webb</span><b>$50.00</b></div>
+          <div class="lr"><span>Gala tickets × 2</span><b>$240.00</b></div>
+          <div class="lr"><span>Pledge · J. Tran</span><b>$1,000.00</b></div>
+          <div class="sync"><svg width="12" height="12"><use href="#chk"/></svg>Synced to QuickBooks</div>
+        </div>
+        <div class="chips"><span class="chip">Payments</span><span class="chip">Pledges</span><span class="chip">Invoicing</span><span class="chip">QuickBooks</span></div>
+        <a class="link-arrow more">Explore Revenue <svg width="14" height="14"><use href="#arr"/></svg></a>
+      </div>
+    </div>
+
+    <div class="mira on-dark">
+      <div>
+        <span class="eyebrow" style="color:var(--amber)"><svg width="14" height="14"><use href="#spark"/></svg>MIRA AI <b>/</b> The AI layer</span>
+        <h3>MIRA sees across all four engines at once.</h3>
+        <p class="lead">Bolt-on AI reads one silo. MIRA reads giving, events, volunteers, programs and staffing together — so it can tell you not just who is likely to give, but whether you have the people to deliver what that gift funds.</p>
+        <div class="chips"><span class="chip chip-d">Draft appeals &amp; pages</span><span class="chip chip-d">Lapse signals</span><span class="chip chip-d">Major-gift flags</span><span class="chip chip-d">Campaign forecasting</span><span class="chip chip-d">Capacity vs. demand</span><span class="chip chip-d">Plain-English reporting</span></div>
+      </div>
+      <div class="chat">
+        <div class="ch">Ask MIRA · spring check-in <span>Reading Revenue + Execution</span></div>
+        <div class="bub me"><small>You · 09:12</small>How is the spring appeal pacing?</div>
+        <div class="bub ai"><small>MIRA · 09:12</small>22% ahead of plan across every channel.</div>
+        <div class="bub ai warn"><small>MIRA · 09:12</small>But Saturday program shifts are <b>40% unstaffed</b> for the same weeks.</div>
+        <div class="bub me"><small>You · 09:14</small>Let’s staff the shifts before we push the appeal harder.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== 03 COMPARISON ============================== -->
+<section class="sec compare on-dark">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow"><span class="ring"></span>03 <b>/</b> Why Missio</span>
+        <h2 class="d2" style="margin-top:24px">What the other platforms leave out.</h2>
+      </div>
+      <p class="lead">Every system can take a gift. The question is what happens to everything that gift sets in motion — the event, the volunteers, the staff who deliver the program, and the books at the end of the month.</p>
+    </div>
+    <div class="cmp-pick">Compare Missio with <span>Legacy donor CRM <svg width="10" height="10"><use href="#chev"/></svg></span></div>
+    <div class="tbl">
+      <div class="tr th"><div>Capability</div><div>Legacy donor CRM</div><div>Enterprise CRM</div><div>Marketing CRM</div><div class="ms">Missio</div></div>
+      <div class="tr"><div>Website, forms &amp; email</div><div class="mid">Separate product</div><div class="mid">Separate cloud</div><div class="mid">Included</div><div class="ms"><i><svg><use href="#chk"/></svg></i>Growth Engine</div></div>
+      <div class="tr"><div>Events &amp; ticketing</div><div class="mid">Separate product</div><div class="mid">App marketplace</div><div class="mid">Integration only</div><div class="ms"><i><svg><use href="#chk"/></svg></i>Growth Engine</div></div>
+      <div class="tr"><div>Volunteer forms &amp; shifts</div><div class="mid">Separate product</div><div class="mid">App marketplace</div><div class="no">Not offered</div><div class="ms"><i><svg><use href="#chk"/></svg></i>Growth Engine</div></div>
+      <div class="tr"><div>Payments &amp; accounting sync</div><div class="mid">Included</div><div class="mid">Via partner</div><div class="mid">Via partner</div><div class="ms"><i><svg><use href="#chk"/></svg></i>Revenue Engine</div></div>
+      <div class="tr"><div>HR, hiring &amp; time tracking</div><div class="no">Not offered</div><div class="no">Not offered</div><div class="no">Not offered</div><div class="ms"><i><svg><use href="#chk"/></svg></i>Execution Engine</div></div>
+      <div class="tr"><div>AI across every module</div><div class="mid">Fundraising only</div><div class="mid">Sales-model AI</div><div class="mid">Marketing only</div><div class="ms"><i><svg><use href="#chk"/></svg></i>MIRA, all four engines</div></div>
+      <div class="tr"><div>Typical time to go live</div><div class="mid">3–9 months</div><div class="mid">6–12 months</div><div class="mid">Weeks, partial fit</div><div class="ms"><i><svg><use href="#chk"/></svg></i>Days to weeks</div></div>
+      <div class="tr"><div>Implementation partner required</div><div class="mid">Usually</div><div class="mid">Almost always</div><div class="mid">Sometimes</div><div class="ms"><i><svg><use href="#chk"/></svg></i>No — we migrate you</div></div>
+    </div>
+    <p class="foot-note">Category comparison based on publicly available product and pricing documentation as of June 2026.</p>
+  </div>
+</section>
+
+<!-- ============================== 04 AUDIENCES ============================== -->
+<section class="sec aud">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow"><span class="ring"></span>04 <b>/</b> Who it’s for</span>
+        <h2 class="d2" style="margin-top:24px">However you’re built to do good, Missio flexes to fit.</h2>
+      </div>
+      <p class="lead">Whether you’re a local community co-op, a new church, or a 200-person international relief org, Missio’s engines configure to your size and workflow.</p>
+    </div>
+    <div class="aud-grid">
+      <div class="au feat"><span class="ic"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3l2.6 5.6 6 .6-4.5 4.1 1.3 6L13 16.3 7.6 19.3l1.3-6L4.4 9.2l6-.6z"/></svg></span><h4>Relief Organizations</h4><p>Surge giving pages go live in hours, not weeks — and volunteer deployment runs in the same system as the appeal that funded it.</p><div class="chips"><span class="chip">Surge campaigns</span><span class="chip">Volunteer deployment</span><span class="chip">Impact reporting</span></div></div>
+      <div class="au"><span class="ic"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5L13 4l9 7.5V22H4z"/><path d="M13 19s-4-2.4-4-5a2.2 2.2 0 014-1.2A2.2 2.2 0 0117 14c0 2.6-4 5-4 5z"/></svg></span><h4>Local Nonprofits</h4><p>Small teams wearing every hat. One login replaces the CRM, the event tool, the form builder and the spreadsheet.</p><div class="chips"><span class="chip">Donor CRM</span><span class="chip">Events</span><span class="chip">QuickBooks sync</span></div></div>
+      <div class="au"><span class="ic"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l10-5 10 5M5 9v10m5.3-10v10m5.4-10v10M21 9v10M3 22h20"/></svg></span><h4>Foundations</h4><p>Boards that ask for clean numbers. Track gifts, pledges and multi-year commitments on one timeline.</p><div class="chips"><span class="chip">Pledges</span><span class="chip">Multi-year giving</span><span class="chip">Board reporting</span></div></div>
+      <div class="au"><span class="ic"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5v6M10 5h6M6 22v-8l7-5.5 7 5.5v8M3 22h20M11 22v-4.5a2 2 0 014 0V22"/></svg></span><h4>Churches</h4><p>Weekly giving, event registration, volunteer rosters and staff scheduling all live together.</p><div class="chips"><span class="chip">Recurring giving</span><span class="chip">Volunteer rosters</span><span class="chip">Events</span></div></div>
+      <div class="au"><span class="ic"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5v5h3.5L16 20V6l-8.5 4.5zM19.5 9.5a5 5 0 010 7"/></svg></span><h4>Advocacy Groups</h4><p>Campaigns that spike and lists that grow fast. Forms, email, SMS and giving feed the same supporter record.</p><div class="chips"><span class="chip">Petitions &amp; forms</span><span class="chip">Email &amp; SMS</span><span class="chip">Rapid giving</span></div></div>
+      <div class="au"><span class="ic"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 10L13 5l10.5 5L13 15z"/><path d="M7 12.2V17c3.6 2.6 8.4 2.6 12 0v-4.8M23.5 10v6"/></svg></span><h4>Private Schools</h4><p>Annual fund, auction and parent events. Development and the business office finally see the same numbers.</p><div class="chips"><span class="chip">Annual fund</span><span class="chip">Auctions</span><span class="chip">Household records</span></div></div>
+      <div class="au ask"><span class="ic" style="background:rgba(242,237,228,.08);color:var(--amber)"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h18v11H11l-5 4v-4H4z"/></svg></span><h4>Built differently?</h4><p>Tell us how your team works. In 45 minutes we’ll map it to the engines you need.</p><a class="btn btn-amber btn-sm">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== 05 SWITCH ============================== -->
+<section class="sec switch">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow"><span class="ring"></span>05 <b>/</b> How switching works</span>
+        <h2 class="d2" style="margin-top:24px">A simpler path to Missio.</h2>
+      </div>
+      <p class="lead">From your current setup to moving your data and making the switch, our team guides every step — and you pick the cutover date around your fundraising calendar.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="rg"></span><div class="meta">01 · 45 minutes · no commitment</div><h4>The stack audit</h4><p>We map every tool you’re paying for against what Missio covers and show the real annual difference. If consolidating doesn’t save you money, we’ll tell you.</p><span class="proof"><svg width="13" height="13" style="color:var(--teal)"><use href="#chk"/></svg>Your savings, in writing</span></div>
+      <div class="step"><span class="rg"></span><div class="meta" style="color:#B5741A">02 · 2–4 weeks · included</div><h4>We move your data</h4><p>Donors, giving history, pledges, recurring gifts, event records and volunteers — reconciled against your current system’s totals.</p><span class="proof"><svg width="13" height="13" style="color:var(--teal)"><use href="#chk"/></svg>Not billed hourly</span></div>
+      <div class="step"><span class="rg"></span><div class="meta" style="color:#2C8BA3">03 · You decide when</div><h4>Parallel run, then cutover</h4><p>Both systems stay live while your team trains and verifies the numbers side by side. Cutover lands the week you choose.</p><span class="proof"><svg width="13" height="13" style="color:var(--teal)"><use href="#chk"/></svg>No gap in your appeals</span></div>
+    </div>
+    <div class="vs">
+      <div class="k">Time to go live</div>
+      <div class="them"><b>6–12 mo</b>Typical enterprise CRM, usually with a paid implementation partner</div>
+      <div class="us"><b>Days to weeks</b>Missio — our own team migrates you, included</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== 06 SERVICES (new offerings) ============================== -->
+<section class="sec svc">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow"><span class="ring"></span>06 <b>/</b> Services</span>
+        <h2 class="d2" style="margin-top:24px">Software is half of it. Our team does the rest.</h2>
+      </div>
+      <p class="lead">Big platforms sell seats and send you to a partner. Missio sells outcomes — with named people, fixed scopes and dates you can put in a board report.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="sv"><span class="new">NEW</span><span class="kind">Switch bundle</span><h4>Launch 30</h4><p class="pitch">Live on Missio in 30 days — at a fixed fee, with a named launch lead.</p>
+        <ul><li><i><svg><use href="#chk"/></svg></i>Stack audit, migration and parallel run</li><li><i><svg><use href="#chk"/></svg></i>Your first 5 pages built with MIRA</li><li><i><svg><use href="#chk"/></svg></i>Staff training, cutover the week you choose</li></ul>
+        <div class="bot"><small>Fixed scope · fixed date</small><span class="link-arrow">Let’s talk <svg width="14" height="14"><use href="#arr"/></svg></span></div></div>
+      <div class="sv dark"><span class="new">NEW</span><span class="kind">Campaign add-on</span><h4>Campaign Sprint</h4><p class="pitch">A done-with-you appeal, live in 10 working days.</p>
+        <ul><li><i><svg><use href="#chk"/></svg></i>MIRA-drafted appeal, donation &amp; event pages</li><li><i><svg><use href="#chk"/></svg></i>Email + SMS sequence, segments built</li><li><i><svg><use href="#chk"/></svg></i>Live pacing dashboard for your board</li></ul>
+        <div class="bot"><small>Giving season · surge · gala</small><span class="link-arrow">Let’s talk <svg width="14" height="14"><use href="#arr"/></svg></span></div></div>
+      <div class="sv"><span class="new">NEW</span><span class="kind">Monthly add-on</span><h4>Mission Desk</h4><p class="pitch">The IT department you don’t have — one named Missio specialist.</p>
+        <ul><li><i><svg><use href="#chk"/></svg></i>Data hygiene, automations, new-hire set-up</li><li><i><svg><use href="#chk"/></svg></i>Quarterly board pack across all engines</li><li><i><svg><use href="#chk"/></svg></i>Same-day answers from someone who knows you</li></ul>
+        <div class="bot"><small>Month to month</small><span class="link-arrow">Let’s talk <svg width="14" height="14"><use href="#arr"/></svg></span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== 07 PROOF ============================== -->
+<section class="sec proof-sec">
+  <div class="wrap proof-grid">
+    <div>
+      <span class="eyebrow"><span class="ring"></span>07 <b>/</b> In the words of the teams we serve</span>
+      <svg class="qmark" viewBox="0 0 72 56" style="margin-top:34px"><path d="M0 56V33C0 14 9 3 27 0l3 8C20 11 15 17 15 26h13v30zm42 0V33C42 14 51 3 69 0l3 8c-10 3-15 9-15 18h13v30z" fill="currentColor"/></svg>
+      <p class="quote">The Missio platform has transformed the way that people around the world support Team Rubicon veterans as we respond to natural disasters.</p>
+      <div class="who"><span class="av">JW</span><div><b>Jake Wood</b><small>CEO &amp; Co-Founder, Team Rubicon</small></div></div>
+    </div>
+    <div class="statc">
+      <div class="st-card t"><b class="tnum">100+</b><p>mission-driven organizations trust Missio — from relief orgs to private schools.</p></div>
+      <div class="st-card"><b class="tnum">48%</b><p>of nonprofits are considering switching CRMs in the next 12 months.</p><small>Source: Omatic 2025 Nonprofit CRM Survey</small></div>
+      <div class="st-card"><b class="tnum">1</b><p>login, one ledger, one record for every person in your mission.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CTA ============================== -->
+<section class="cta">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow" style="color:var(--ink)"><span class="ring"></span>Let’s talk</span>
+      <h2 class="d1" style="margin-top:24px">Your renewal quote. We’ll bring the math.</h2>
+      <p>Forty-five minutes, no commitment, and a line-item comparison against what you pay today.</p>
+      <div class="ctas">
+        <a class="btn btn-ink">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a>
+        <a class="btn btn-ghost" style="border-color:rgba(22,38,45,.35)">Price my stack in 60 seconds</a>
+      </div>
+    </div>
+    <div class="book">
+      <div class="bh"><span class="av">RM</span><div><b>Book your stack audit</b><small>45 min · video call · December 2026</small></div></div>
+      <div class="cal"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><i>7</i><i class="on">8</i><i>9</i><i>10</i><i>11</i></div>
+      <div class="slots"><span>9:30 AM</span><span class="on">11:00 AM</span><span>1:30 PM</span><span>3:00 PM</span></div>
+      <div class="go">Confirm Tue, Dec 8 · 11:00 AM</div>
+      <div class="note">Bring your renewal quote — we’ll bring the math.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <img src="../assets/missio-logo-cream.svg" alt="Missio" style="height:24px">
+        <div class="tag">One platform,<br>Endless Impact.</div>
+        <div style="font-size:14px">Practical ideas for mission-driven teams. Get the Missio newsletter.</div>
+        <div class="news"><input value="Email address"><a class="btn btn-amber btn-sm" style="padding:0 18px">Subscribe</a></div>
+      </div>
+      <div><h5>Platform</h5><ul><li><a href="growth-engine.html">Growth Engine</a></li><li>Relationship Engine</li><li>Execution Engine</li><li>Revenue Engine</li><li>MIRA AI</li><li>Compare Missio</li></ul></div>
+      <div><h5>Services</h5><ul><li>Launch 30</li><li>Campaign Sprint</li><li>Mission Desk</li><li>Stack audit</li><li>Migration</li></ul></div>
+      <div><h5>Company</h5><ul><li>About</li><li>Pricing</li><li>Contact us</li><li>Book a consultation</li><li>Careers</li><li>Newsroom</li></ul></div>
+      <div><h5>Resources</h5><ul><li>Stack audit worksheet</li><li>Migration guide</li><li>Benchmark report</li><li>Help center</li><li>Blog</li><li>Community</li></ul></div>
+    </div>
+    <div class="base"><span>© 2026 Missio. All rights reserved.</span><span>Privacy · Terms · Security · Accessibility · Cookie preferences</span></div>
+  </div>
+</footer>
+
+<!-- mobile: sticky CTA + full-screen menu (2 taps to any page) -->
+<div class="m-sticky"><span>Bring your renewal quote<small>45 min · no commitment</small></span><a class="btn btn-amber btn-sm">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a></div>
+<div class="mmenu">
+  <div class="mm-top"><img src="../assets/missio-logo-teal.svg" alt="Missio"><span class="mm-x">×</span></div>
+  <div class="mm-body">
+    <div class="mm-h">Platform<span>4 engines · 1 record</span></div>
+    <div class="mm-eng">
+      <a href="growth-engine.html"><i style="border-color:var(--growth)"></i><b>Growth</b><small>Pages, events, email</small></a>
+      <a><i style="border-color:var(--relation)"></i><b>Relationship</b><small>Donor CRM, timeline</small></a>
+      <a><i style="border-color:var(--execution)"></i><b>Execution</b><small>Hiring, shifts, time</small></a>
+      <a><i style="border-color:var(--revenue)"></i><b>Revenue</b><small>Giving to the books</small></a>
+    </div>
+    <div class="mm-h">Who it’s for</div>
+    <div class="mm-pills"><a>Relief orgs</a><a>Local nonprofits</a><a>Foundations</a><a>Churches</a><a>Advocacy</a><a>Schools</a></div>
+    <div class="mm-list" style="margin-top:10px">
+      <a>MIRA AI <span>AI across all engines</span></a>
+      <a>Services <span>Launch 30 · Sprint · Desk</span></a>
+      <a>Why Missio <span>Honest comparison</span></a>
+      <a>Pricing <span>Price your stack</span></a>
+      <a>Resources <span>Guides · blog · help</span></a>
+    </div>
+  </div>
+  <div class="mm-cta"><a class="btn btn-amber">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a><a class="btn btn-ghost" style="padding:0 20px">Log in</a></div>
+</div>
+
+<script>
+  // presentation states for the design review: #mega (desktop mega-menu open), #menu (mobile menu open)
+  if (location.hash === '#mega') document.body.classList.add('mega-on');
+  if (location.hash === '#menu') document.body.classList.add('menu-on');
+</script>
+<script>
+  // design-review hook: #y1234 opens the page scrolled to that offset (used by the presentation boards)
+  (function(){var m=location.hash.match(/^#y(\d+)/); if(m){document.documentElement.style.scrollBehavior='auto'; window.addEventListener('load',function(){window.scrollTo(0,+m[1]);}); window.scrollTo(0,+m[1]);}})();
+</script>
+<script>
+  // prototype behaviour: Platform mega-menu (click, Esc, click-away) and the mobile menu sheet
+  (function(){
+    var b=document.body;
+    document.querySelectorAll('[data-mega]').forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();b.classList.toggle('mega-on');});});
+    document.addEventListener('click',function(e){ if(b.classList.contains('mega-on') && !e.target.closest('.mega')) b.classList.remove('mega-on'); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape'){b.classList.remove('mega-on');b.classList.remove('menu-on');} });
+    document.querySelectorAll('.burger').forEach(function(el){el.addEventListener('click',function(){b.classList.add('menu-on');});});
+    document.querySelectorAll('.mm-x').forEach(function(el){el.addEventListener('click',function(){b.classList.remove('menu-on');});});
+  })();
+</script>
+</body>
+</html>

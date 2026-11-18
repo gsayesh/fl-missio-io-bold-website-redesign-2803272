@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Growth Engine — Missio</title>
+<link rel="stylesheet" href="missio.css">
+<style>
+body{background:var(--paper)}
+.nav-light .logo{height:26px}
+.nav-light li{color:var(--ink)}
+/* sticky sub-nav: always one click from "Let's talk" */
+.subnav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.subnav .wrap{display:flex;align-items:center;height:64px;gap:34px}
+.subnav .nm{display:flex;align-items:center;gap:10px;font:800 19px/1 var(--display);letter-spacing:-.02em}
+.subnav .nm i{width:18px;height:18px;border-radius:50%;border:5px solid var(--growth)}
+.subnav .tabs{display:flex;gap:6px;font:500 14.5px/1 var(--text);color:var(--muted)}
+.subnav .tabs span{padding:9px 13px;border-radius:999px}
+.subnav .tabs span.on{background:var(--paper);color:var(--ink);font-weight:600}
+.subnav .r{margin-left:auto;display:flex;gap:10px;align-items:center}
+.subnav .r .btn-ghost{height:44px;font-size:14.5px;padding:0 18px}
+
+/* hero */
+.ghero{position:relative;padding:52px 0 0;overflow:hidden}
+.ghero .wrap.top{display:grid;grid-template-columns:560px 1fr;gap:48px}
+.crumb{font:500 14px/1 var(--text);color:var(--muted);display:flex;gap:10px;align-items:center}
+.crumb b{color:var(--ink);font-weight:600}
+.ghero .eyebrow{margin-top:30px}
+.ghero .eyebrow .ring{color:var(--growth)}
+.ghero h1{font-size:76px;line-height:.95;letter-spacing:-.04em;margin-top:20px}
+.ghero h1 .hl{color:var(--teal)}
+.ghero .lead{margin-top:22px;font-size:18.5px}
+.ghero .ctas{display:flex;gap:12px;margin-top:32px}
+.repl{display:flex !important;align-items:center;gap:28px;margin-top:8px;padding-top:26px !important;padding-bottom:30px;border-top:1px solid var(--line-strong);background-clip:content-box}
+.repl small{white-space:nowrap;font:600 11.5px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.rp{display:flex;flex-wrap:nowrap;gap:8px;align-items:center}
+.rp s{display:inline-flex;align-items:center;height:30px;padding:0 11px;border-radius:999px;border:1px dashed rgba(22,38,45,.28);font:500 13px/1 var(--text);color:var(--muted);text-decoration-color:rgba(181,77,46,.7);text-decoration-thickness:1.5px}
+.rp .eq{font:700 15px/1 var(--text);color:var(--ink);margin:0 4px}
+.rp .one{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;border-radius:999px;background:var(--ink);color:#fff;font:600 13.5px/1 var(--text)}
+.rp .one img{height:11px}
+
+/* builder composition */
+.comp{position:relative;height:640px}
+.win{position:absolute;left:16px;top:8px;width:648px;height:520px;background:#fff;border-radius:22px;box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 40px 80px -28px rgba(6,42,51,.45),0 0 0 1px rgba(22,38,45,.08);overflow:hidden;display:grid;grid-template-rows:52px 1fr}
+.wbar{display:flex;align-items:center;gap:18px;padding:0 18px;border-bottom:1px solid var(--line);background:#FBFAF7}
+.wbar .dots{display:flex;gap:6px}
+.wbar .dots i{width:10px;height:10px;border-radius:50%;background:#E3DED4}
+.wbar .tabs{display:flex;gap:4px;font:500 13px/1 var(--text);color:var(--muted)}
+.wbar .tabs span{padding:8px 11px;border-radius:8px}
+.wbar .tabs span.on{background:var(--paper);color:var(--ink);font-weight:600}
+.wbar .tabs span.m{color:#8A5A12}
+.wbar .pub{margin-left:auto;font:600 12.5px/1 var(--text);background:var(--teal);color:#fff;padding:9px 14px;border-radius:9px}
+.wbody{display:grid;grid-template-columns:150px 1fr}
+.blocks{border-right:1px solid var(--line);padding:16px 12px;background:#FCFBF8}
+.blocks small{display:block;white-space:nowrap;overflow:hidden;font:600 10.5px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:2px 6px 12px}
+.blk{display:flex;align-items:center;gap:9px;padding:9px 8px;border-radius:9px;font:500 13px/1 var(--text);color:var(--ink);margin-bottom:3px}
+.blk i{width:22px;height:22px;border-radius:6px;background:var(--paper);display:grid;place-items:center;font-style:normal;font-size:10px;color:var(--muted)}
+.blk.on{background:rgba(2,100,126,.08);color:var(--teal);font-weight:600}
+.blk.on i{background:var(--teal);color:#fff}
+.blk.add{color:var(--muted);border:1px dashed var(--line-strong);margin-top:8px;justify-content:center}
+.canvas{padding:16px 18px;background:#F4F1EA;position:relative}
+.pg{background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--e1)}
+.pg .ph{height:140px;background:url(../assets/nonprofit-benefits.jpg) center 30%/cover;position:relative}
+.pg .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,42,51,0) 40%,rgba(6,42,51,.55))}
+.pg .ph span{position:absolute;left:16px;bottom:12px;z-index:1;font:600 11px/1 var(--text);letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(6,42,51,.5);padding:6px 9px;border-radius:6px}
+.pg .pc{padding:16px 16px 16px;display:grid;grid-template-columns:1fr 168px;gap:14px}
+.pg h5{font:800 20px/1.06 var(--display);letter-spacing:-.025em;position:relative}
+.pg h5 .sel{position:absolute;inset:-6px -8px;border:1.5px solid var(--amber);border-radius:8px}
+.pg h5 .sel::after{content:"MIRA";position:absolute;right:-1px;top:-20px;font:700 9.5px/1 var(--text);letter-spacing:.1em;background:var(--amber);color:var(--ink);padding:4px 6px;border-radius:5px 5px 0 0}
+.pg p{font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.5}
+.pg .form{border:1px solid var(--line);border-radius:12px;padding:12px}
+.pg .form small{font:600 10px/1 var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tg{display:grid;grid-template-columns:1fr 1fr;background:var(--paper);border-radius:8px;padding:3px;margin:9px 0 8px}
+.tg span{text-align:center;font:600 11.5px/1 var(--text);padding:7px 0;border-radius:6px;color:var(--muted)}
+.tg span.on{background:#fff;color:var(--ink);box-shadow:var(--e1)}
+.am{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.am span{border:1px solid var(--line-strong);border-radius:7px;text-align:center;padding:8px 0;font:600 12.5px/1 var(--text)}
+.am span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.gv{margin-top:8px;background:var(--amber);border-radius:8px;text-align:center;padding:10px;font:700 12.5px/1 var(--text)}
+.rec-line{margin-top:12px;display:flex;align-items:center;gap:8px;font:600 11.5px/1.3 var(--text);color:var(--teal);background:rgba(2,100,126,.07);padding:9px 10px;border-radius:9px}
+.rec-line i{width:10px;height:10px;border-radius:50%;border:2.5px solid var(--teal);flex:none}
+
+.miraP{position:absolute;right:-14px;top:356px;width:292px;background:var(--night);color:var(--paper);border-radius:20px;padding:18px;box-shadow:0 30px 60px -16px rgba(3,20,26,.6);z-index:3}
+.miraP .h{display:flex;align-items:center;gap:10px;font:600 12px/1 var(--text);letter-spacing:.08em;text-transform:uppercase;color:var(--amber)}
+.miraP .h i{width:26px;height:26px;border-radius:8px;background:linear-gradient(140deg,var(--amber),#F7C877);display:grid;place-items:center;color:var(--night)}
+.miraP p{font-size:14px;line-height:1.5;margin-top:12px;color:rgba(242,237,228,.9)}
+.miraP p mark{background:rgba(242,167,61,.22);color:var(--paper);border-radius:3px;padding:0 2px}
+.miraP .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.miraP .src span{font:500 11px/1 var(--text);padding:6px 8px;border-radius:6px;background:rgba(242,237,228,.08);color:rgba(242,237,228,.7)}
+.miraP .b{display:flex;gap:8px;margin-top:14px}
+.miraP .b span{flex:1;text-align:center;font:600 12.5px/1 var(--text);padding:10px 0;border-radius:9px;border:1px solid rgba(242,237,228,.2)}
+.miraP .b span.ok{background:var(--amber);color:var(--ink);border-color:var(--amber)}
+
+.phone{position:absolute;left:-36px;top:268px;width:188px;height:368px;border-radius:34px;background:#0E1E24;padding:8px;box-shadow:0 40px 70px -20px rgba(3,20,26,.55);z-index:2}
+.phone .scr{width:100%;height:100%;border-radius:27px;background:#fff;overflow:hidden;position:relative}
+.phone .ph{height:112px;background:url(../assets/nonprofit-benefits.jpg) center 30%/cover}
+.phone .notch{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:62px;height:18px;border-radius:12px;background:#0E1E24;z-index:2}
+.phone .in{padding:12px 13px}
+.phone h6{font:800 15px/1.08 var(--display);letter-spacing:-.02em}
+.phone .am{margin-top:10px}
+.phone .am span{padding:7px 0;font-size:11.5px}
+.phone .gv{font-size:11.5px;padding:9px}
+.phone .sec-t{font-size:10px;color:var(--muted);text-align:center;margin-top:8px}
+
+/* outcomes */
+.outc{background:var(--night);color:var(--paper)}
+.outc .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.outc .o{padding:56px 40px 56px 0;border-right:1px solid var(--line-dark);margin-right:40px}
+.outc .o:last-child{border-right:0;margin-right:0}
+.outc b{display:block;font:800 46px/1 var(--display);white-space:nowrap;letter-spacing:-.04em;color:var(--amber)}
+.outc .o:nth-child(2) b{color:var(--sky)}
+.outc .o:nth-child(3) b{color:var(--paper)}
+.outc p{font-size:16.5px;color:rgba(242,237,228,.72);margin-top:14px;max-width:340px}
+
+/* inside */
+.inside{background:#fff}
+.f-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.f{border-radius:24px;border:1px solid var(--line);background:var(--paper-2);overflow:hidden;display:flex;flex-direction:column}
+.f .vis{height:176px;padding:20px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#F3EEE4,#F8F5EF)}
+.f .tx{padding:22px 26px 26px;border-top:1px solid var(--line);background:#fff;flex:1}
+.f .n{font:600 12px/1 var(--text);letter-spacing:.14em;color:var(--muted)}
+.f h4{font:800 25px/1.1 var(--display);letter-spacing:-.025em;margin-top:10px}
+.f p{font-size:15px;color:var(--muted);margin-top:8px;line-height:1.5}
+.ui{background:#fff;border-radius:14px;box-shadow:var(--e2);border:1px solid var(--line);padding:14px;width:100%;max-width:300px;font-size:12px}
+.ui .uh{display:flex;justify-content:space-between;font:600 10.5px/1 var(--text);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.pl{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line);font-weight:500}
+.pl:last-child{border-bottom:0}
+.pl .st{margin-left:auto;font:600 10px/1 var(--text);padding:4px 6px;border-radius:5px;background:rgba(47,165,140,.14);color:#1F7563}
+.pl .st.d{background:rgba(242,167,61,.2);color:#8A5A12}
+.bar2{height:8px;border-radius:99px;background:var(--paper);overflow:hidden;margin-top:8px}
+.bar2 i{display:block;height:100%;border-radius:99px;background:var(--growth)}
+.fld{border:1px solid var(--line-strong);border-radius:8px;padding:8px 10px;margin-bottom:6px;color:var(--muted);display:flex;justify-content:space-between}
+.fld b{color:var(--ink);font-weight:600}
+.to{display:flex;align-items:center;gap:6px;margin-top:8px;font:600 11px/1 var(--text);color:#A5492B}
+.to i{width:10px;height:10px;border-radius:50%;border:2.5px solid var(--execution)}
+.sms{background:var(--paper);border-radius:12px 12px 12px 4px;padding:9px 11px;line-height:1.4;margin-top:8px}
+.seg{display:inline-flex;align-items:center;gap:6px;background:rgba(79,179,204,.15);color:#1F6F82;font:600 11px/1 var(--text);padding:6px 8px;border-radius:6px}
+.mtx{line-height:1.5;color:var(--ink)}
+.mtx mark{background:rgba(242,167,61,.25);border-radius:3px;padding:0 2px}
+.mb{display:flex;gap:6px;margin-top:10px}
+.mb span{flex:1;text-align:center;padding:8px 0;border-radius:7px;border:1px solid var(--line-strong);font:600 11px/1 var(--text)}
+.mb span.ok{background:var(--amber);border-color:var(--amber)}
+
+/* flow */
+.flow{background:var(--paper)}
+.fl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative}
+.fs{background:#fff;border-radius:24px;border:1px solid var(--line);padding:28px;position:relative}
+.fs .k{display:flex;align-items:center;justify-content:space-between}
+.fs .k span{font:600 12px/1 var(--text);letter-spacing:.14em;color:var(--muted)}
+.fs .k em{font-style:normal;font:600 11px/1 var(--text);letter-spacing:.08em;text-transform:uppercase;padding:6px 9px;border-radius:999px}
+.fs h4{font:800 27px/1.08 var(--display);letter-spacing:-.025em;margin-top:22px}
+.fs p{font-size:15.5px;color:var(--muted);margin-top:12px;line-height:1.55}
+.fs .ev{margin-top:20px;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:var(--paper-2);font:600 13.5px/1.3 var(--text)}
+.fs .ev .av{width:30px;height:30px;font-size:11px;background:var(--rust)}
+.without{margin-top:22px;display:flex;align-items:center;gap:16px;padding:20px 26px;border-radius:20px;background:#fff;border:1.5px dashed rgba(181,77,46,.45)}
+.without b{font:700 12px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--rust);white-space:nowrap}
+.without p{font:600 18px/1.35 var(--text);letter-spacing:-.01em}
+
+/* objection */
+.objg{background:#fff}
+.objg .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.mr{border-radius:28px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--e2)}
+.mr > div{padding:28px 32px}
+.mr small{font:700 11.5px/1 var(--text);letter-spacing:.16em;text-transform:uppercase}
+.mr p{font-size:16.5px;line-height:1.55;margin-top:12px}
+.mr .myth{background:var(--paper-2)}
+.mr .myth small{color:var(--rust)}
+.mr .myth p{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(181,77,46,.45);text-decoration-thickness:1.5px}
+.mr .real{background:var(--night);color:var(--paper)}
+.mr .real small{color:var(--amber)}
+.mr .real p{font-size:18px;color:var(--paper)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:30px}
+.facts div{border-radius:16px;background:var(--paper-2);padding:16px;font:600 14.5px/1.3 var(--text)}
+.facts div i{display:block;width:16px;height:16px;border-radius:50%;border:4px solid var(--teal);margin-bottom:12px}
+
+/* add-on */
+.addon{background:var(--teal);color:#fff}
+.addon .wrap{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;padding-top:64px;padding-bottom:64px}
+.addon .eyebrow{color:var(--amber)}
+.addon h3{font:800 44px/1.02 var(--display);letter-spacing:-.035em;margin-top:16px}
+.addon p{font-size:17.5px;color:rgba(255,255,255,.8);margin-top:14px;max-width:760px}
+.addon .inc{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.addon .inc span{font:500 13px/1 var(--text);padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.12)}
+
+/* other engines */
+.others{background:var(--paper)}
+.o-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.oe{background:#fff;border-radius:24px;border:1px solid var(--line);padding:28px;display:flex;flex-direction:column;gap:14px;min-height:220px}
+.oe .t{display:flex;align-items:center;justify-content:space-between}
+.oe .t span{font:600 12px/1 var(--text);letter-spacing:.14em;color:var(--muted)}
+.oe .t i{width:22px;height:22px;border-radius:50%;border:6px solid}
+.oe h4{font:800 30px/1 var(--display);letter-spacing:-.03em}
+.oe p{font-size:16px;color:var(--muted)}
+.oe .link-arrow{margin-top:auto;align-self:flex-start}
+
+/* cta */
+.gcta{background:var(--amber)}
+.gcta .wrap{padding-top:88px;padding-bottom:88px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end}
+.gcta h2{font-size:76px;letter-spacing:-.045em;line-height:.95}
+.gcta p{font-size:19px;margin-top:20px;max-width:640px;color:rgba(22,38,45,.8)}
+.gcta .ctas{display:flex;gap:12px}
+
+.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 var(--text);color:#fff;flex:none}
+.avp{background:#fff !important;padding:0;overflow:hidden;box-shadow:0 0 0 2px #fff,0 0 0 3.5px rgba(181,77,46,.55)}
+.avp img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+/* mobile */
+.m-sticky{display:none}
+@media (max-width:760px){
+  .subnav .tabs,.subnav .r .btn-ghost{display:none}
+  .subnav .wrap{height:56px}
+  .subnav .nm{font-size:17px}
+  .ghero{padding-top:26px}
+  .ghero .wrap.top{grid-template-columns:1fr;gap:0}
+  .ghero .eyebrow{margin-top:18px}
+  .ghero h1{font-size:44px;margin-top:14px}
+  .ghero .lead{font-size:16px;margin-top:16px}
+  .ghero .ctas{flex-direction:column;gap:10px;margin-top:22px}
+  .ghero .ctas .btn{width:100%;justify-content:space-between}
+  .ghero .ctas .btn-ghost{justify-content:center}
+  .repl{display:none !important}
+  .rp s{height:27px;font-size:12px;padding:0 9px}
+  .comp{height:420px;margin-top:26px}
+  .win,.miraP{display:none}
+  .phone{left:50%;transform:translateX(-50%);top:0}
+  .outc .wrap,.f-grid,.fl-grid,.objg .wrap,.o-grid,.addon .wrap,.gcta .wrap{grid-template-columns:1fr}
+  .m-sticky{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:60;background:var(--ink);color:#fff;border-radius:999px;padding:7px 7px 7px 20px;align-items:center;justify-content:space-between;box-shadow:0 14px 30px rgba(0,0,0,.3)}
+  .m-sticky span{font:600 14px/1.2 var(--text)}
+  .m-sticky small{display:block;font-weight:400;font-size:12px;opacity:.7}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="arr" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="chev" viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="chk" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="spark" viewBox="0 0 16 16"><path d="M8 1.5l1.6 4.3 4.4 1.7-4.4 1.7L8 13.5 6.4 9.2 2 7.5l4.4-1.7z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<nav class="nav nav-light">
+  <div class="wrap">
+    <a href="home.html"><img class="logo" src="../assets/missio-logo-teal.svg" alt="Missio"></a>
+    <ul>
+      <li class="on">Platform <svg><use href="#chev"/></svg></li>
+      <li>Who it’s for <svg><use href="#chev"/></svg></li>
+      <li>Services <svg><use href="#chev"/></svg></li>
+      <li>Why Missio</li>
+      <li>Pricing</li>
+      <li>Resources <svg><use href="#chev"/></svg></li>
+    </ul>
+    <div class="right">
+      <span class="hide-m">Log in</span>
+      <a class="btn btn-amber btn-sm hide-m">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a>
+      <span class="burger"><svg width="18" height="12" viewBox="0 0 18 12"><path d="M1 1h16M1 6h16M1 11h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+    </div>
+  </div>
+</nav>
+
+<div class="subnav">
+  <div class="wrap">
+    <span class="nm"><i></i>Growth Engine</span>
+    <div class="tabs"><span class="on">Overview</span><span>What’s inside</span><span>How it flows</span><span>Migration</span><span>FAQ</span></div>
+    <div class="r"><a class="btn btn-ghost">See pricing</a><a class="btn btn-amber btn-sm">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a></div>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="ghero">
+  <div class="wrap top">
+    <div>
+      <div class="crumb"><a href="home.html">Home</a> <span>/</span> Platform <span>/</span> <b>Growth Engine</b></div>
+      <span class="eyebrow"><span class="ring"></span>Engine 01 <b>·</b> Web presence</span>
+      <h1 class="d1">Bring in support <span class="hl">without bringing in another tool.</span></h1>
+      <p class="lead">Website, donation pages, events, forms, email and SMS — all in one connected system, with MIRA ready to draft your first page or appeal. Every form feeds the same donor record, so no supporter falls through the cracks.</p>
+      <div class="ctas">
+        <a class="btn btn-amber">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a>
+        <a class="btn btn-ghost">See pricing</a>
+      </div>
+    </div>
+
+    <div class="comp">
+      <div class="win">
+        <div class="wbar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <div class="tabs"><span class="on">Pages</span><span>Email</span><span>Forms</span><span class="m">✦ MIRA drafting</span></div>
+          <span class="pub">Publish</span>
+        </div>
+        <div class="wbody">
+          <div class="blocks">
+            <small>Spring appeal</small>
+            <div class="blk"><i>H</i>Hero image</div>
+            <div class="blk on"><i>T</i>Headline</div>
+            <div class="blk"><i>$</i>Give form</div>
+            <div class="blk"><i>★</i>Gala tickets</div>
+            <div class="blk"><i>✓</i>Volunteers</div>
+            <div class="blk"><i>@</i>Email follow-up</div>
+            <div class="blk add">+ Add block</div>
+          </div>
+          <div class="canvas">
+            <div class="pg">
+              <div class="ph"><span>Spring appeal</span></div>
+              <div class="pc">
+                <div>
+                  <h5><span class="sel"></span>Every Saturday, the warehouse fills up.</h5>
+                  <p>Last spring, volunteers like Marcus packed 1,200 boxes. This year we want to double that, and we can’t do it without you.</p>
+                </div>
+                <div class="form">
+                  <small>Your gift</small>
+                  <div class="tg"><span>One-time</span><span class="on">Monthly</span></div>
+                  <div class="am"><span>$25</span><span class="on">$50</span><span>$100</span></div>
+                  <div class="gv">Give $50 monthly</div>
+                </div>
+              </div>
+            </div>
+            <div class="rec-line"><i></i>Every gift lands on the donor’s record</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone"><div class="scr"><span class="notch"></span><div class="ph"></div><div class="in"><h6>Every Saturday, the warehouse fills up.</h6><div class="tg" style="margin-top:10px"><span>One-time</span><span class="on">Monthly</span></div><div class="am"><span>$25</span><span class="on">$50</span><span>$100</span></div><div class="gv">Give $50 monthly</div><div class="sec-t">🔒 Secure checkout · cards never stored</div></div></div></div>
+
+      <div class="miraP">
+        <div class="h"><i><svg width="13" height="13"><use href="#spark"/></svg></i>MIRA writing</div>
+        <p>Last spring, volunteers like Marcus packed <mark>1,200 boxes</mark>. This year we want to double that — and we can’t do it without you.</p>
+        <div class="src"><span>From: volunteer hours</span><span>Gala guests</span><span>2025 appeal</span></div>
+        <div class="b"><span>Regenerate</span><span class="ok">Insert</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap repl">
+    <small>What it replaces</small>
+    <div class="rp"><s>Website builder</s><s>Donation forms</s><s>Event ticketing</s><s>Volunteer sign-up forms</s><s>Email platform</s><s>SMS tool</s><span class="eq">=</span><span class="one"><img src="../assets/missio-mark-amber.svg" alt="">1 login</span></div>
+  </div>
+</header>
+
+<!-- ============ OUTCOMES ============ -->
+<section class="outc">
+  <div class="wrap">
+    <div class="o"><b>An afternoon</b><p>to build a gala page your team owns — no developer, no separate ticketing vendor.</p></div>
+    <div class="o"><b>Hours, not weeks</b><p>for surge giving pages when the news breaks and supporters want to help right now.</p></div>
+    <div class="o"><b>One record</b><p>for every form, ticket and gift — so no supporter falls through the cracks.</p></div>
+  </div>
+</section>
+
+<!-- ============ WHAT'S INSIDE ============ -->
+<section class="sec inside">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow"><span class="ring" style="color:var(--growth)"></span>What’s inside</span>
+        <h2 class="d2" style="margin-top:22px">Six tools you pay for separately. One engine.</h2>
+      </div>
+      <p class="lead">Each piece writes to the same supporter record, so your website, your events and your appeals finally know who they’re talking to.</p>
+    </div>
+    <div class="f-grid">
+      <div class="f"><div class="vis"><div class="ui"><div class="uh"><span>Site pages</span><span>6</span></div><div class="pl">Home<span class="st">Live</span></div><div class="pl">Our programs<span class="st">Live</span></div><div class="pl">Spring appeal<span class="st d">Draft</span></div></div></div><div class="tx"><span class="n">01</span><h4>Website &amp; CMS</h4><p>Your whole site, edited by the people who write the appeals — no developer queue.</p></div></div>
+      <div class="f"><div class="vis"><div class="ui"><div class="uh"><span>Donation page</span><span>Monthly</span></div><div class="am"><span>$25</span><span class="on">$50</span><span>$100</span></div><div class="gv">Give $50 monthly</div></div></div><div class="tx"><span class="n">02</span><h4>Donation pages</h4><p>One-time, monthly and tribute gifts — branded, mobile-first and live in minutes.</p></div></div>
+      <div class="f"><div class="vis"><div class="ui"><div class="uh"><span>Spring gala</span><span>Tickets</span></div><div class="pl" style="border:0;padding:0"><b style="font-weight:600">Table seats sold</b><span style="margin-left:auto;font-weight:600" class="tnum">86 / 120</span></div><div class="bar2"><i style="width:72%"></i></div><div style="margin-top:10px;color:var(--muted)">Sample data · every ticket lands on the guest’s record</div></div></div><div class="tx"><span class="n">03</span><h4>Events &amp; ticketing</h4><p>Galas, runs and auctions with check-in — and no export back to the CRM.</p></div></div>
+      <div class="f"><div class="vis"><div class="ui"><div class="uh"><span>Volunteer sign-up</span><span>Form</span></div><div class="fld">Name <b>Marcus Webb</b></div><div class="fld">Shift <b>Saturday · 8:00</b></div><div class="to"><i></i>Fills a shift in the Execution Engine</div></div></div><div class="tx"><span class="n">04</span><h4>Volunteer forms</h4><p>Sign-ups go straight into real shifts and rosters, not a spreadsheet.</p></div></div>
+      <div class="f"><div class="vis"><div class="ui"><div class="uh"><span>SMS · segment</span><span>Today</span></div><span class="seg">● Gala guests, not yet monthly</span><div class="sms">Thanks for coming to the gala, Marcus! One tap to keep the boxes coming every month →</div></div></div><div class="tx"><span class="n">05</span><h4>Email &amp; SMS</h4><p>Segments come from the donor record, so there are no list exports to keep in sync.</p></div></div>
+      <div class="f"><div class="vis"><div class="ui"><div class="uh"><span style="color:#8A5A12">✦ MIRA drafting</span><span>Appeal</span></div><div class="mtx">Last spring, volunteers like Marcus packed <mark>1,200 boxes</mark>. This year we want to double that…</div><div class="mb"><span>Regenerate</span><span class="ok">Insert</span></div></div></div><div class="tx"><span class="n">06</span><h4>MIRA drafting</h4><p>First drafts of pages and appeals from what’s already in your record — your team edits instead of starting blank.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT FLOWS ============ -->
+<section class="sec flow">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow"><span class="ring"></span>How it flows</span>
+        <h2 class="d2" style="margin-top:22px">One supporter. One record. No handoffs.</h2>
+      </div>
+      <p class="lead">Follow Marcus from a program story to a monthly gift — every step written to the same record, across every engine.</p>
+    </div>
+    <div class="fl-grid">
+      <div class="fs"><div class="k"><span>01</span><em style="background:rgba(242,167,61,.2);color:#8A5A12">Growth Engine</em></div><h4>A supporter finds you</h4><p>Marcus reads a program story and buys two tickets to the spring gala — through a page your team built in an afternoon.</p><div class="ev"><span class="av avp"><img src="../assets/avatar-marcus.jpg" alt="Marcus Webb"></span>Bought 2 gala tickets</div></div>
+      <div class="fs"><div class="k"><span>02</span><em style="background:rgba(79,179,204,.18);color:#1F6F82">Relationship Engine</em></div><h4>Every action, one timeline</h4><p>His tickets, a new monthly gift and a Saturday shift join the same timeline your whole team can see.</p><div class="ev"><span class="av avp"><img src="../assets/avatar-marcus.jpg" alt="Marcus Webb"></span>3 actions · 1 record · 0 exports</div></div>
+      <div class="fs"><div class="k"><span>03</span><em style="background:var(--night);color:var(--amber)">✦ MIRA</em></div><h4>The next move, flagged</h4><p>He has given after every gala for three years and now volunteers monthly. MIRA suggests the ask — and when.</p><div class="ev"><span class="av" style="background:var(--amber);color:var(--ink)">✦</span>Ask before November 1</div></div>
+    </div>
+    <div class="without"><b>Without Missio</b><p>The ticketing platform never tells the CRM who he is.</p></div>
+  </div>
+</section>
+
+<!-- ============ OBJECTION ============ -->
+<section class="sec objg">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><span class="ring"></span>What boards ask first</span>
+      <h2 class="d2" style="margin-top:22px;font-size:58px">“Migration will eat our fundraising season.”</h2>
+      <div class="facts">
+        <div><i></i>We run the migration for you</div>
+        <div><i style="border-color:var(--amber)"></i>Both systems live in parallel</div>
+        <div><i style="border-color:var(--sky)"></i>You pick the cutover date</div>
+      </div>
+    </div>
+    <div class="mr">
+      <div class="myth"><small>The myth</small><p>Moving donor records, giving history, pledges and event data will take months, and something will break in the middle of an appeal.</p></div>
+      <div class="real"><small>The reality</small><p>Our team runs the migration and reconciles every total against your current system. You keep both systems live until the numbers match — and cut over after year-end appeals, before spring events.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ADD-ON ============ -->
+<section class="addon">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><span class="ring"></span>Pair it with <b>·</b> new add-on</span>
+      <h3>Campaign Sprint: a done-with-you appeal, live in 10 working days.</h3>
+      <div class="inc"><span>MIRA-drafted appeal</span><span>Donation &amp; event pages</span><span>Email + SMS sequence</span><span>Live pacing dashboard</span><span>A named Missio strategist</span></div>
+    </div>
+    <a class="btn btn-amber">Plan a Sprint <span class="arr"><svg><use href="#arr"/></svg></span></a>
+  </div>
+</section>
+
+<!-- ============ OTHER ENGINES ============ -->
+<section class="sec others">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:40px">
+      <div>
+        <span class="eyebrow"><span class="ring"></span>The Missio engines</span>
+        <h2 class="d3" style="margin-top:20px">Explore the other engines.</h2>
+      </div>
+      <p class="lead">Turn them on when you’re ready — they already share the same record.</p>
+    </div>
+    <div class="o-grid">
+      <div class="oe"><div class="t"><span>ENGINE 02</span><i style="border-color:var(--relation)"></i></div><h4>Relationship</h4><p>Every donor in one view, even when staff leave.</p><a class="link-arrow">Explore <svg width="14" height="14"><use href="#arr"/></svg></a></div>
+      <div class="oe"><div class="t"><span>ENGINE 03</span><i style="border-color:var(--execution)"></i></div><h4>Execution</h4><p>The part most nonprofit systems miss: your people.</p><a class="link-arrow">Explore <svg width="14" height="14"><use href="#arr"/></svg></a></div>
+      <div class="oe"><div class="t"><span>ENGINE 04</span><i style="border-color:var(--revenue)"></i></div><h4>Revenue</h4><p>From the gift to the books, without the handoff.</p><a class="link-arrow">Explore <svg width="14" height="14"><use href="#arr"/></svg></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="gcta">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow" style="color:var(--ink)"><span class="ring"></span>Let’s talk</span>
+      <h2 class="d1" style="margin-top:20px">Bring your next appeal. We’ll build it live.</h2>
+      <p>Forty-five minutes, no commitment: we draft your page with MIRA, wire it to a donor record, and show the line-item math against what you pay today.</p>
+    </div>
+    <div class="ctas"><a class="btn btn-ink">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <img src="../assets/missio-logo-cream.svg" alt="Missio" style="height:24px">
+        <div class="tag">One platform,<br>Endless Impact.</div>
+        <div style="font-size:14px">Practical ideas for mission-driven teams. Get the Missio newsletter.</div>
+        <div class="news"><input value="Email address"><a class="btn btn-amber btn-sm" style="padding:0 18px">Subscribe</a></div>
+      </div>
+      <div><h5>Platform</h5><ul><li><a href="growth-engine.html">Growth Engine</a></li><li>Relationship Engine</li><li>Execution Engine</li><li>Revenue Engine</li><li>MIRA AI</li><li>Compare Missio</li></ul></div>
+      <div><h5>Services</h5><ul><li>Launch 30</li><li>Campaign Sprint</li><li>Mission Desk</li><li>Stack audit</li><li>Migration</li></ul></div>
+      <div><h5>Company</h5><ul><li>About</li><li>Pricing</li><li>Contact us</li><li>Book a consultation</li><li>Careers</li><li>Newsroom</li></ul></div>
+      <div><h5>Resources</h5><ul><li>Stack audit worksheet</li><li>Migration guide</li><li>Benchmark report</li><li>Help center</li><li>Blog</li><li>Community</li></ul></div>
+    </div>
+    <div class="base"><span>© 2026 Missio. All rights reserved.</span><span>Privacy · Terms · Security · Accessibility · Cookie preferences</span></div>
+  </div>
+</footer>
+
+<div class="m-sticky"><span>See it with your appeal<small>45 min · no commitment</small></span><a class="btn btn-amber btn-sm">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a></div>
+<script>
+  // design-review hook: #y1234 opens the page scrolled to that offset (used by the presentation boards)
+  (function(){var m=location.hash.match(/^#y(\d+)/); if(m){document.documentElement.style.scrollBehavior='auto'; window.addEventListener('load',function(){window.scrollTo(0,+m[1]);}); window.scrollTo(0,+m[1]);}})();
+</script>
+</body>
+</html>

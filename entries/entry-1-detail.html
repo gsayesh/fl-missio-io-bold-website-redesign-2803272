@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Missio — bold website redesign · design package</title>
+<link rel="stylesheet" href="../site/missio.css">
+<style>
+  html,body{width:1600px;height:7543px;overflow:hidden}
+  body{background:var(--paper);color:var(--ink);font-size:15px;line-height:1.5}
+  .pad{padding:0 64px}
+  /* shared board labels */
+  .lab{display:flex;align-items:baseline;gap:14px;margin-bottom:20px;flex-wrap:wrap;row-gap:4px}
+  .lab .n{font:700 13px/1 var(--text);letter-spacing:.08em;color:var(--teal);border:2px solid var(--teal);border-radius:999px;padding:6px 9px;transform:translateY(-4px)}
+  .lab h3{font:800 30px/1 var(--display);letter-spacing:-.03em;white-space:nowrap}
+  .lab span{font:500 14.5px/1.3 var(--text);color:var(--muted)}
+  .on-night .lab .n{color:var(--amber);border-color:var(--amber)}
+  .on-night .lab span{color:rgba(242,237,228,.6)}
+
+  /* ================= A · HEADER ================= */
+  .hd{background:var(--night);color:var(--paper);position:relative;overflow:hidden;padding:48px 64px 44px}
+  .hd::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 420px at 88% 0%,rgba(2,100,126,.55),transparent 70%),radial-gradient(600px 300px at 0% 100%,rgba(242,167,61,.08),transparent 70%)}
+  .hd > *{position:relative}
+  .hd .top{display:flex;align-items:center;gap:22px}
+  .hd .top img{height:30px}
+  .hd .top .lbl{margin-left:auto;font:600 12px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:rgba(242,237,228,.6)}
+  .hd .top .pill{font:600 13px/1 var(--text);padding:9px 14px;border-radius:999px;border:1px solid rgba(242,237,228,.22);color:var(--paper)}
+  .hd .main{display:grid;grid-template-columns:1fr 520px;gap:56px;margin-top:52px;align-items:start}
+  .hd h1{font:800 76px/.97 var(--display);letter-spacing:-.04em}
+  .hd h1 span{color:var(--amber)}
+  .hd p.rat{font-size:19px;line-height:1.55;color:rgba(242,237,228,.76);margin-top:26px;max-width:860px}
+  .hd p.rat b{color:var(--paper);font-weight:600}
+  .crit{border:1px solid var(--line-dark);border-radius:24px;background:rgba(242,237,228,.04);padding:22px 24px 10px}
+  .crit h6{font:600 11.5px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--sky);margin-bottom:6px}
+  .cr{display:grid;grid-template-columns:30px 1fr;gap:14px;padding:13px 0;border-bottom:1px solid var(--line-dark)}
+  .cr:last-child{border-bottom:0}
+  .cr i{width:28px;height:28px;border-radius:50%;background:var(--amber);color:var(--ink);display:grid;place-items:center;font:700 12px/1 var(--text);font-style:normal}
+  .cr b{display:block;font:700 15.5px/1.3 var(--text);color:var(--paper)}
+  .cr small{display:block;font-size:13.5px;line-height:1.45;color:rgba(242,237,228,.66);margin-top:3px}
+  .idx{display:flex;flex-wrap:nowrap;gap:7px;margin-top:40px}
+  .idx span{white-space:nowrap;font:600 12.5px/1 var(--text);padding:10px 11px;border-radius:999px;background:rgba(242,237,228,.07);border:1px solid rgba(242,237,228,.12);color:rgba(242,237,228,.86)}
+  .idx span b{color:var(--amber);margin-right:6px;font-variant-numeric:tabular-nums}
+
+  /* ================= B · PAGES ================= */
+  .pages{padding:56px 64px 52px;display:grid;grid-template-columns:600px 600px 208px;gap:32px;align-items:start}
+  .frame{border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px rgba(22,38,45,.12),0 6px 0 -2px rgba(6,42,51,.06)}
+  .fbar{height:22px;background:#F8F6F1;display:flex;align-items:center;gap:5px;padding:0 10px;border-bottom:1px solid #E6E0D6}
+  .fbar i{width:7px;height:7px;border-radius:50%;background:#D9D2C6}
+  .fbar span{margin:0 auto;transform:translateX(-14px);font:500 9.5px/1 var(--text);color:#6A7A80;background:#EFEAE1;padding:3px 26px;border-radius:5px}
+  .vp{position:relative;overflow:hidden}
+  .vp iframe{border:0;display:block;transform-origin:0 0}
+  .col2 > * + .lab{margin-top:44px}
+  .phones{display:flex;flex-direction:column;gap:22px}
+  .ph{width:208px;border-radius:30px;background:#0E1E24;padding:8px;box-shadow:0 10px 18px -10px rgba(6,42,51,.45)}
+  .ph .scr{width:192px;height:415.5px;border-radius:23px;overflow:hidden;position:relative;background:#fff}
+  .ph .scr img{width:192px;height:415.5px;display:block}
+  .cap{font:600 12.5px/1.35 var(--text);color:var(--ink);margin-top:10px;padding-left:4px}
+  .cap small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+  .mnote{margin-top:6px;border-radius:20px;background:var(--night);color:var(--paper);padding:20px 18px}
+  .mnote h6{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+  .mnote li{list-style:none;font-size:13px;line-height:1.45;color:rgba(242,237,228,.8);padding:9px 0;border-top:1px solid var(--line-dark)}
+  .mnote li b{color:var(--paper);font-weight:600;display:block}
+
+  /* sitemap */
+  .ia{background:#fff;border-radius:22px;border:1px solid var(--line);padding:24px 24px 22px;box-shadow:var(--e1)}
+  .ia-row{display:grid;grid-template-columns:74px 1fr;gap:14px;align-items:start}
+  .lv{font:700 10.5px/1.2 var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:10px}
+  .lv b{display:block;font:800 22px/1 var(--display);letter-spacing:-.02em;color:var(--teal);margin-top:4px}
+  .root{display:inline-flex;align-items:center;gap:10px;background:var(--night);color:var(--paper);font:700 14px/1 var(--text);padding:10px 16px;border-radius:999px}
+  .root img{height:14px}
+  .l1{display:flex;flex-wrap:wrap;gap:6px}
+  .l1 span{font:600 12.5px/1 var(--text);padding:9px 11px;border-radius:999px;background:var(--paper);border:1px solid var(--line)}
+  .l1 span.c{background:var(--amber);border-color:var(--amber)}
+  .ia-sep{height:18px;margin-left:88px;border-left:2px dashed rgba(2,100,126,.35)}
+  .l2{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .l2 .g{border-radius:14px;background:var(--paper-2);border:1px solid var(--line);padding:11px 10px}
+  .l2 .g h6{font:700 11px/1.2 var(--text);letter-spacing:.06em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .l2 .g h6 i{width:9px;height:9px;border-radius:50%;border:2.5px solid var(--teal)}
+  .l2 .g div{font:500 12px/1.25 var(--text);padding:5px 0;border-top:1px dashed var(--line)}
+  .l2 .g div em{font-style:normal;font:700 9px/1 var(--text);letter-spacing:.06em;background:var(--amber);padding:2px 4px;border-radius:4px;margin-left:4px;vertical-align:1px}
+  .ia-note{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .ia-note div{border-radius:14px;padding:12px 14px;background:var(--night);color:rgba(242,237,228,.8);font-size:12.5px;line-height:1.45}
+  .ia-note div b{color:var(--amber);display:block;font-size:13px;margin-bottom:2px}
+
+  /* ================= C · SYSTEM ================= */
+  .sys{background:#fff;padding:60px 64px 58px}
+  .sys-grid{display:grid;grid-template-columns:600px 1fr;gap:40px}
+  .mood{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:186px 186px 186px 186px 78px;gap:12px}
+  .mt{border-radius:20px;overflow:hidden;position:relative}
+  .mt .c{position:absolute;left:14px;bottom:12px;font:600 11px/1 var(--text);letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(6,42,51,.55);padding:6px 8px;border-radius:6px}
+  .mt.big{grid-column:span 2;grid-row:span 2;background:var(--night);color:var(--paper);padding:26px}
+  .mt.big::before{content:"";position:absolute;inset:0;background:radial-gradient(360px 260px at 70% 70%,rgba(2,100,126,.7),transparent 70%)}
+  .mt.big > *{position:relative}
+  .mt.big b{font:800 40px/1 var(--display);letter-spacing:-.035em;display:block}
+  .mt.big b span{color:var(--amber)}
+  .mt.big svg{position:absolute;left:26px;right:26px;bottom:26px;width:calc(100% - 52px)}
+  .duo{background-size:cover;background-position:center}
+  .duo::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(2,100,126,.45),rgba(6,42,51,.25) 60%,rgba(242,167,61,.18));mix-blend-mode:multiply}
+  .mt.amb{background:var(--amber);padding:20px;display:flex;flex-direction:column;justify-content:space-between}
+  .mt.amb b{font:800 28px/1 var(--display);letter-spacing:-.03em;white-space:nowrap}
+  .mt.amb small{font:600 11px/1 var(--text);letter-spacing:.12em;text-transform:uppercase}
+  .mt.typ{background:var(--paper);padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between}
+  .mt.typ b{font:800 92px/.8 var(--display);letter-spacing:-.05em}
+  .mt.typ small{font:600 11px/1.3 var(--text);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .mt.ui{background:linear-gradient(160deg,#0B3742,#062A33);display:grid;place-items:center;padding:16px}
+  .mini-rec{width:100%;background:#fff;border-radius:14px;padding:12px;font-size:11.5px;box-shadow:0 14px 30px rgba(0,0,0,.35)}
+  .mini-rec .h{display:flex;align-items:center;gap:8px;font:700 13px/1 var(--text);padding-bottom:9px;border-bottom:1px solid var(--line)}
+  .mini-rec .h i{width:26px;height:26px;border-radius:50%;background:var(--rust);color:#fff;font:700 10px/26px var(--text);text-align:center;font-style:normal}
+  .mini-rec .r{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px dashed var(--line);font-weight:600}
+  .mini-rec .r:last-child{border:0}
+  .mini-rec .r u{width:9px;height:9px;border-radius:50%;border:2.5px solid;text-decoration:none}
+  .mt.mark{background:var(--paper-2);border:1px solid var(--line);padding:22px 20px;display:flex;flex-direction:column;justify-content:space-between}
+  .mt.mark img{width:88%}
+  .mt.mark small{font:500 11.5px/1.4 var(--text);color:var(--muted)}
+  .mt.mark small b{display:block;font:700 13px/1.3 var(--text);color:var(--ink)}
+  .mt.ico{background:var(--night);display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:18px;align-content:start}
+  .mt.ico span{height:52px;border-radius:14px;background:rgba(242,237,228,.07);border:1px solid rgba(242,237,228,.1);display:grid;place-items:center;color:var(--amber)}
+  .mt.ico svg{width:24px;height:24px}
+  .mt.ico small{grid-column:span 2;font:600 10.5px/1.3 var(--text);letter-spacing:.1em;text-transform:uppercase;color:rgba(242,237,228,.6);margin-top:2px}
+  .mt.words{grid-column:span 3;background:var(--paper-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;font:800 26px/1 var(--display);letter-spacing:-.02em}
+  .mt.words i{width:8px;height:8px;border-radius:50%;border:2px solid var(--teal)}
+
+  .sg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .blk{border-radius:20px;border:1px solid var(--line);padding:20px 20px 18px;background:var(--paper-2)}
+  .blk h6{font:600 11.5px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;justify-content:space-between}
+  .blk h6 span{letter-spacing:.02em;text-transform:none;font-weight:500}
+  .sw{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .s{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff}
+  .s .c{height:86px;position:relative}
+  .s .c em{position:absolute;right:7px;top:7px;font:700 9.5px/1 var(--text);font-style:normal;padding:3px 5px;border-radius:4px;background:rgba(255,255,255,.85);color:var(--ink)}
+  .s .t{padding:8px 9px 9px}
+  .s b{display:block;font:700 12px/1.2 var(--text)}
+  .s small{display:block;font:500 11px/1.3 var(--text);color:var(--muted);font-variant-numeric:tabular-nums}
+  .ratio{display:flex;height:12px;border-radius:99px;overflow:hidden;margin-top:14px;box-shadow:inset 0 0 0 1px rgba(22,38,45,.18)}
+  .ratio-l{display:flex;justify-content:space-between;font:500 11px/1 var(--text);color:var(--muted);margin-top:7px}
+  .engc{display:flex;gap:6px;margin-top:12px}
+  .engc span{flex:1;display:flex;align-items:center;gap:7px;font:600 11.5px/1 var(--text);padding:8px 9px;border-radius:10px;background:#fff;border:1px solid var(--line)}
+  .engc i{width:12px;height:12px;border-radius:50%;border:3.5px solid}
+  .ty{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:end;padding-bottom:12px;border-bottom:1px solid var(--line)}
+  .ty .aa{font:800 104px/.78 var(--display);letter-spacing:-.05em}
+  .ty .aa.in{font:600 84px/.8 var(--text);letter-spacing:-.04em}
+  .ty b{display:block;font:700 15px/1.2 var(--text)}
+  .ty small{display:block;font-size:12.5px;color:var(--muted);line-height:1.45;margin-top:4px}
+  .scale{margin-top:10px}
+  .scale div{display:grid;grid-template-columns:86px 1fr 70px;align-items:baseline;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line)}
+  .scale div:last-child{border:0}
+  .scale em{font:600 10.5px/1 var(--text);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .scale span{white-space:nowrap;overflow:hidden}
+  .scale code{font:500 11px/1 var(--text);color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+  .kit{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .kit .btn{height:46px;font-size:15px}
+  .kit .btn .arr{width:32px;height:32px}
+  .kit .inp{height:46px;border-radius:999px;border:1.5px solid var(--teal);background:#fff;display:flex;align-items:center;padding:0 16px;font-size:14px;color:var(--muted);width:206px;box-shadow:0 0 0 4px rgba(2,100,126,.14)}
+  .kit .tgl{width:46px;height:26px;border-radius:99px;background:var(--teal);position:relative}
+  .kit .tgl::after{content:"";position:absolute;right:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff}
+  .states{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+  .states div{text-align:center;font:600 12px/1 var(--text);padding:11px 0;border-radius:999px}
+  .states small{display:block;text-align:center;font:500 10.5px/1 var(--text);color:var(--muted);margin-top:6px;letter-spacing:.04em}
+  .dd{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .dd div{border-radius:14px;padding:12px 14px;font-size:12.5px;line-height:1.45}
+  .dd .do{background:rgba(47,165,140,.1);border:1px solid rgba(47,165,140,.3)}
+  .dd .dont{background:rgba(181,77,46,.07);border:1px solid rgba(181,77,46,.25)}
+  .dd b{display:block;font:700 11px/1 var(--text);letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}
+  .dd .do b{color:#1F7563}
+  .dd .dont b{color:var(--rust)}
+  .icons{display:flex;gap:10px;margin-top:12px}
+  .icons span{width:44px;height:44px;border-radius:13px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;color:var(--teal)}
+  .icons svg{width:22px;height:22px}
+
+  /* ================= D · STRATEGY ================= */
+  .strat{padding:60px 64px 58px;background:var(--paper)}
+  .st-grid{display:grid;grid-template-columns:640px 1fr;gap:40px}
+  .copy{display:flex;flex-direction:column;gap:14px}
+  .voice{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .voice div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+  .voice b{display:block;font:800 19px/1.1 var(--display);letter-spacing:-.02em}
+  .voice small{display:block;font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.45}
+  .formula{background:var(--night);color:var(--paper);border-radius:18px;padding:18px 20px}
+  .formula h6{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
+  .formula .f{font:800 25px/1.1 var(--display);letter-spacing:-.025em;margin-top:10px}
+  .formula .f u{text-decoration:none;color:var(--amber)}
+  .formula .f s{text-decoration:none;color:#6E9AA5}
+  .formula .ex{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .formula .ex span{font:500 12.5px/1 var(--text);padding:8px 10px;border-radius:999px;background:rgba(242,237,228,.08);color:rgba(242,237,228,.85)}
+  .ba{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .ba h6,.mc h6{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:14px 18px 10px}
+  .ba-r{display:grid;grid-template-columns:1fr 24px 1.25fr;gap:10px;align-items:center;padding:11px 18px;border-top:1px solid var(--line)}
+  .ba-r .b{font-size:13px;color:var(--muted)}
+  .ba-r .b span{text-decoration:line-through;text-decoration-color:rgba(181,77,46,.5)}
+  .ba-r .b small{display:block;font:600 10px/1 var(--text);letter-spacing:.1em;text-transform:uppercase;color:var(--rust);margin-bottom:4px}
+  .ba-r .ar{color:var(--teal);font-weight:700}
+  .ba-r .a{font:700 14.5px/1.3 var(--text);letter-spacing:-.01em}
+  .ba-r .a small{display:block;font:500 12px/1.35 var(--text);color:var(--muted);margin-top:3px;letter-spacing:0}
+  .mc{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .mc-g{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+  .mc-g div{padding:11px 18px;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.4}
+  .mc-g div:nth-child(odd){border-right:1px solid var(--line)}
+  .mc-g div em{display:block;font:600 10px/1 var(--text);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-style:normal;margin-bottom:5px}
+  .mc-g div b{font-weight:600}
+
+  .offers{display:flex;flex-direction:column;gap:14px}
+  .of-head{background:var(--teal);color:#fff;border-radius:22px;padding:22px 24px;display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:center}
+  .of-head b{font:800 27px/1.08 var(--display);letter-spacing:-.025em;display:block}
+  .of-head p{font-size:13.5px;color:rgba(255,255,255,.8);line-height:1.45}
+  .of{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px 22px;display:grid;grid-template-columns:230px 1fr 1fr;gap:20px}
+  .of .nm .k{font:600 10.5px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+  .of .nm b{display:block;font:800 30px/1 var(--display);letter-spacing:-.035em;margin-top:8px}
+  .of .nm p{font:600 14px/1.35 var(--text);margin-top:8px}
+  .of .nm .mdl{display:inline-block;margin-top:10px;font:600 11px/1 var(--text);padding:6px 9px;border-radius:999px;background:var(--paper);color:var(--ink)}
+  .of h6{font:700 10.5px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .of ul{list-style:none}
+  .of li{font-size:12.5px;line-height:1.4;padding:4px 0 4px 16px;position:relative;color:var(--ink)}
+  .of li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;border:2px solid var(--teal)}
+  .of .pos{font-size:12.5px;line-height:1.45;color:var(--ink)}
+  .of .pos b{font-weight:700}
+  .of .feas{margin-top:10px;font-size:12px;line-height:1.45;color:#1F7563;background:rgba(47,165,140,.1);border-radius:10px;padding:8px 10px}
+  .of.dark{background:var(--night);color:var(--paper);border-color:var(--night)}
+  .of.dark .nm .k{color:var(--sky)}
+  .of.dark li,.of.dark .pos{color:rgba(242,237,228,.85)}
+  .of.dark h6{color:rgba(242,237,228,.5)}
+  .of.dark .nm .mdl{background:rgba(242,237,228,.1);color:var(--paper)}
+  .of.dark .feas{background:rgba(47,165,140,.18);color:#7FD6C2}
+  .of.dark li::before{border-color:var(--sky)}
+  .neut{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .neut div{border-radius:16px;padding:14px 16px;background:#fff;border:1px dashed rgba(2,100,126,.35);font-size:12.5px;line-height:1.4;color:var(--muted)}
+  .neut b{display:block;font:800 18px/1.1 var(--display);letter-spacing:-.02em;color:var(--ink);margin-bottom:4px}
+
+  /* ================= E · HANDOVER ================= */
+  .hand{background:var(--night);color:var(--paper);padding:60px 64px 44px}
+  .hd-grid{display:grid;grid-template-columns:470px 1fr 380px;gap:32px}
+  .wfs{display:flex;gap:14px;align-items:flex-start}
+  .wf{background:#fff;border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:5px}
+  .wf div{background:#E9E6E0;border-radius:4px;font:700 7.5px/1 var(--text);letter-spacing:.08em;color:#8B9296;display:flex;align-items:center;justify-content:center;text-transform:uppercase}
+  .wf .dk{background:#C9CDD0;color:#5E676B}
+  .wf .row{background:none;display:grid;gap:4px}
+  .wf .row div{height:100%}
+  .wcap{font:600 12px/1.3 var(--text);color:rgba(242,237,228,.85);margin-top:10px}
+  .wcap small{display:block;font-weight:400;color:rgba(242,237,228,.55)}
+  .spec{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .sp{border-radius:18px;border:1px solid var(--line-dark);background:rgba(242,237,228,.04);padding:16px 18px}
+  .sp h6{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+  .sp table{width:100%;border-collapse:collapse;font-size:12.5px}
+  .sp td{padding:5px 0;border-bottom:1px dashed var(--line-dark);color:rgba(242,237,228,.82);font-variant-numeric:tabular-nums}
+  .sp tr:last-child td{border-bottom:0}
+  .sp td:first-child{color:rgba(242,237,228,.55);width:34%;white-space:nowrap;padding-right:8px}
+  .sp ul{list-style:none}
+  .sp li{font-size:12.5px;line-height:1.45;padding:5px 0;border-bottom:1px dashed var(--line-dark);color:rgba(242,237,228,.82)}
+  .sp li:last-child{border-bottom:0}
+  .sp li b{color:var(--paper);font-weight:600}
+  .bps{display:flex;gap:6px;align-items:flex-end;margin-bottom:10px}
+  .bps div{border:1.5px solid rgba(79,179,204,.6);border-radius:6px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font:700 10px/1 var(--text);color:var(--sky);font-variant-numeric:tabular-nums}
+  .heur{border-radius:20px;background:var(--paper);color:var(--ink);padding:18px 20px}
+  .heur h6{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+  .hr{display:grid;grid-template-columns:1fr auto;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);align-items:center}
+  .hr:last-child{border:0}
+  .hr b{display:block;font:700 13.5px/1.25 var(--text)}
+  .hr small{display:block;font-size:12px;color:var(--muted);line-height:1.4;margin-top:2px}
+  .hr em{font-style:normal;font:700 10.5px/1 var(--text);letter-spacing:.06em;padding:6px 8px;border-radius:999px;background:rgba(47,165,140,.14);color:#1F7563;white-space:nowrap}
+  .plan{margin-top:12px;border-radius:20px;border:1px solid var(--line-dark);background:rgba(242,237,228,.04);padding:14px 18px 4px}
+  .plan h6{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+  .pw{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:start;padding:7px 0;border-top:1px dashed var(--line-dark)}
+  .pw:first-of-type{border-top:0}
+  .pw em{font-style:normal;font:700 11.5px/1 var(--text);color:var(--ink);background:var(--amber);border-radius:999px;padding:6px 0;text-align:center;font-variant-numeric:tabular-nums}
+  .pw b{display:block;font:700 13.5px/1.25 var(--text);color:var(--paper)}
+  .pw small{display:block;font-size:12px;line-height:1.4;color:rgba(242,237,228,.62);margin-top:2px}
+  .ship{margin-top:22px;display:flex;align-items:center;gap:18px;padding-top:24px;border-top:1px solid var(--line-dark)}
+  .ship img{height:22px}
+  .ship span{font-size:14px;color:rgba(242,237,228,.7)}
+  .ship span b{color:var(--paper);font-weight:600}
+  .ship .r{margin-left:auto;font:600 13px/1 var(--text);color:var(--amber)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="arr" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="chk" viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<!-- ======================= A · HEADER ======================= -->
+<header class="hd">
+  <div class="top">
+    <img src="../assets/missio-logo-cream.svg" alt="Missio">
+    <span class="lbl">Website redesign · complete design package</span>
+    <span class="pill">Hi-fi mockups built as real responsive HTML/CSS</span>
+  </div>
+  <div class="main">
+    <div>
+      <h1>Shoulder to shoulder with the big players. <span>Unmistakably Missio.</span></h1>
+      <p class="rat"><b>The idea:</b> Missio’s logo is five connected nodes — so the whole site is built on that network: four engines meeting in one supporter record. Giant type and confident colour blocks bring the specialist-agency boldness; real product UI, real customers, cited sources and an honest comparison bring the trust. Brand teal, amber and paper are kept — just pushed harder.</p>
+    </div>
+    <div class="crit">
+      <h6>Acceptance criteria → where they’re met</h6>
+      <div class="cr"><i>1</i><div><b>Bold agency feel that elevates trust</b><small>104 px display type, colour-blocked sections; product UI as hero, real customers, cited sources.</small></div></div>
+      <div class="cr"><i>2</i><div><b>Any primary page in ≤ 2 interactions</b><small>Mega-menus on desktop, one-sheet menu on mobile, “Let’s talk” one tap from every screen.</small></div></div>
+      <div class="cr"><i>3</i><div><b>Who · what · why in the first scrolls</b><small>Hero = who, four engines = what, comparison + switching path = why. Heuristic review below.</small></div></div>
+      <div class="cr"><i>4</i><div><b>Feasible, differentiating new offerings</b><small>Launch 30, Campaign Sprint, Mission Desk — built on today’s team and engines.</small></div></div>
+    </div>
+  </div>
+  <div class="idx">
+    <span><b>01</b>Homepage</span><span><b>02</b>Service page</span><span><b>03</b>Mobile</span><span><b>04</b>Mega-menu</span><span><b>05</b>2-click sitemap</span><span><b>06</b>Mood board</span><span><b>07</b>Style guide</span><span><b>08</b>Copy direction</span><span><b>09</b>New offerings</span><span><b>10</b>Wireframes</span><span><b>11</b>Dev handover</span>
+  </div>
+</header>
+
+<!-- ======================= B · PAGES ======================= -->
+<section class="pages">
+  <div class="col1">
+    <div class="lab"><span class="n">01</span><h3>Homepage</h3><span>Desktop 1440 · full scroll</span></div>
+    <div class="frame"><div class="fbar"><i></i><i></i><i></i><span>missio.io</span></div>
+      <div class="vp" style="width:600px;height:3715px"><img src="../assets/board/home-full.png" alt="Missio homepage, full scroll" style="width:600px;height:3715px;display:block"></div>
+    </div>
+  </div>
+
+  <div class="col2">
+    <div class="lab"><span class="n">02</span><h3>Service page</h3><span>Growth Engine · benefit-led, ends on “Let’s talk”</span></div>
+    <div class="frame"><div class="fbar"><i></i><i></i><i></i><span>missio.io/growth-engine</span></div>
+      <div class="vp" style="width:600px;height:2304px"><img src="../assets/board/growth-full.png" alt="Growth Engine service page" style="width:600px;height:2304px;display:block"></div>
+    </div>
+
+    <div class="lab"><span class="n">04</span><h3>Navigation</h3><span>Platform mega-menu · every engine in 2 clicks</span></div>
+    <div class="frame"><div class="fbar"><i></i><i></i><i></i><span>missio.io</span></div>
+      <div class="vp" style="width:600px;height:375px"><img src="../assets/board/home-mega.png" alt="Platform mega-menu" style="width:600px;height:375px;display:block"></div>
+    </div>
+
+    <div class="lab"><span class="n">05</span><h3>Sitemap</h3><span>Every primary page in ≤ 2 interactions</span></div>
+    <div class="ia">
+      <div class="ia-row"><div class="lv">Start</div><div><span class="root"><img src="../assets/missio-mark-amber.svg" alt="">Any page</span></div></div>
+      <div class="ia-sep"></div>
+      <div class="ia-row"><div class="lv">Click<b>1</b></div>
+        <div class="l1"><span>Platform ▾</span><span>Who it’s for ▾</span><span>Services ▾</span><span>Why Missio</span><span>Pricing</span><span>Resources ▾</span><span class="c">Let’s talk</span></div></div>
+      <div class="ia-sep"></div>
+      <div class="ia-row"><div class="lv">Click<b>2</b></div>
+        <div class="l2">
+          <div class="g"><h6><i></i>Platform</h6><div>Growth Engine</div><div>Relationship Engine</div><div>Execution Engine</div><div>Revenue Engine</div><div>MIRA AI</div><div>Compare Missio</div><div>Integrations</div><div>Security</div></div>
+          <div class="g"><h6><i></i>Who it’s for</h6><div>Relief organizations</div><div>Local nonprofits</div><div>Foundations</div><div>Churches</div><div>Advocacy groups</div><div>Private schools</div></div>
+          <div class="g"><h6><i></i>Services</h6><div>Launch 30<em>NEW</em></div><div>Campaign Sprint<em>NEW</em></div><div>Mission Desk<em>NEW</em></div><div>Stack audit</div><div>Migration</div></div>
+          <div class="g"><h6><i></i>Resources</h6><div>Blog</div><div>Stack audit worksheet</div><div>Migration guide</div><div>Benchmark report</div><div>Help center</div><div>About · Careers</div><div>Newsroom · Contact</div></div>
+        </div></div>
+      <div class="ia-note">
+        <div><b>Mobile: 2 taps</b>Menu → page. One scrolling sheet, no nested accordions.</div>
+        <div><b>“Let’s talk”: 1 tap</b>Top bar, sticky sub-nav on service pages, sticky mobile bar.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col3">
+    <div class="lab" style="flex-wrap:wrap;row-gap:6px"><span class="n">03</span><h3>Mobile</h3><span style="width:100%">390 · thumb-first</span></div>
+    <div class="phones">
+      <div><div class="ph"><div class="scr"><img src="../assets/board/m-home.png" alt=""></div></div><div class="cap">Home · hero<small>Sticky “Let’s talk” bar</small></div></div>
+      <div><div class="ph"><div class="scr"><img src="../assets/board/m-menu.png" alt=""></div></div><div class="cap">Menu sheet<small>Any page in 2 taps</small></div></div>
+      <div><div class="ph"><div class="scr"><img src="../assets/board/m-engines.png" alt=""></div></div><div class="cap">Four engines<small>Cards stack, UI stays legible</small></div></div>
+      <div><div class="ph"><div class="scr"><img src="../assets/board/m-compare.png" alt=""></div></div><div class="cap">Comparison<small>Collapses to a 2-up picker</small></div></div>
+      <div><div class="ph"><div class="scr"><img src="../assets/board/m-growth.png" alt=""></div></div><div class="cap">Growth Engine<small>Sub-nav keeps the CTA in reach</small></div></div>
+      <div><div class="ph"><div class="scr"><img src="../assets/board/m-inside.png" alt=""></div></div><div class="cap">What’s inside<small>Feature cards with live UI</small></div></div>
+      <div><div class="ph"><div class="scr"><img src="../assets/board/m-services.png" alt=""></div></div><div class="cap">New services<small>Launch 30 · Sprint · Desk</small></div></div>
+    </div>
+    <div class="mnote">
+      <h6>Mobile rules</h6>
+      <ul>
+        <li><b>44 px targets</b>All tap areas, incl. chips and menu rows.</li>
+        <li><b>No hover-only content</b>Mega-menus become one sheet.</li>
+        <li><b>Type floor 16 px</b>Body never shrinks below it.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= C · MOOD BOARD + STYLE GUIDE ======================= -->
+<section class="sys">
+  <div class="sys-grid">
+    <div>
+      <div class="lab"><span class="n">06</span><h3>Mood board</h3><span>Bold · warm · specific · connected</span></div>
+      <div class="mood">
+        <div class="mt big">
+          <b>Everything<br><span>connects.</span></b>
+          <svg viewBox="0 0 340 150" fill="none">
+            <polyline points="14,138 62,20 170,82 278,20 326,138" stroke="#4FB3CC" stroke-width="2" stroke-dasharray="3 9" stroke-linecap="round" opacity=".7"/>
+            <circle cx="14" cy="128" r="13" stroke="#F2A73D" stroke-width="7"/>
+            <circle cx="62" cy="20" r="12" stroke="#4FB3CC" stroke-width="7"/>
+            <circle cx="170" cy="82" r="11" stroke="#F2EDE4" stroke-width="6"/>
+            <circle cx="278" cy="20" r="12" stroke="#E0734F" stroke-width="7"/>
+            <circle cx="326" cy="128" r="13" stroke="#2FA58C" stroke-width="7"/>
+          </svg>
+        </div>
+        <div class="mt duo" style="background-image:url(../assets/board/nonprofit-benefits.jpg)"><span class="c">Real teams, mid-task</span></div>
+        <div class="mt amb"><small>Primary action</small><b>Let’s talk →</b></div>
+        <div class="mt typ"><b>Aa</b><small>Bricolage Grotesque 800<br>Big, tight, confident</small></div>
+        <div class="mt duo" style="background-image:url(../assets/board/01.jpg)"><span class="c">Warm, natural light</span></div>
+        <div class="mt ui">
+          <div class="mini-rec"><div class="h"><i style="background:url(../assets/avatar-marcus.jpg) center/cover"></i>Marcus Webb</div>
+            <div class="r"><u style="border-color:#F2A73D"></u>Bought 2 gala tickets</div>
+            <div class="r"><u style="border-color:#2FA58C"></u>Started a monthly gift</div>
+            <div class="r"><u style="border-color:#E0734F"></u>Saturday shift</div></div>
+        </div>
+        <div class="mt mark"><img src="../assets/missio-mark-teal.svg" alt=""><small>The mark → the system<br><b>5 nodes = 4 engines + 1 record</b></small></div>
+        <div class="mt duo" style="background-image:url(../assets/board/Missio-Help-Grow.jpg);background-position:center 35%"><span class="c">Product in the room</span></div>
+        <div class="mt ico">
+          <span><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3l2.6 5.6 6 .6-4.5 4.1 1.3 6L13 16.3 7.6 19.3l1.3-6L4.4 9.2l6-.6z"/></svg></span>
+          <span><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5v6M10 5h6M6 22v-8l7-5.5 7 5.5v8M3 22h20M11 22v-4.5a2 2 0 014 0V22"/></svg></span>
+          <span><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5v5h3.5L16 20V6l-8.5 4.5zM19.5 9.5a5 5 0 010 7"/></svg></span>
+          <span><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 10L13 5l10.5 5L13 15z"/><path d="M7 12.2V17c3.6 2.6 8.4 2.6 12 0v-4.8M23.5 10v6"/></svg></span>
+          <small>Line icons · 1.9 stroke · round joins</small>
+        </div>
+        <div class="mt words">Bold <i></i> Warm <i></i> Specific <i></i> Connected <i></i> Trusted</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="lab"><span class="n">07</span><h3>Style guide</h3><span>Missio’s own colours and voice, pushed bolder</span></div>
+      <div class="sg">
+        <div class="blk" style="grid-column:span 2">
+          <h6>Colour <span>WCAG AA verified · ratios on the swatch</span></h6>
+          <div class="sw">
+            <div class="s"><div class="c" style="background:#02647E"><em>6.7:1</em></div><div class="t"><b>Missio Teal</b><small>#02647E · brand, links</small></div></div>
+            <div class="s"><div class="c" style="background:#062A33"><em>13.0:1</em></div><div class="t"><b>Deep Mission</b><small>#062A33 · dark sections</small></div></div>
+            <div class="s"><div class="c" style="background:#F2A73D"><em>7.7:1</em></div><div class="t"><b>Spark Amber</b><small>#F2A73D · every CTA</small></div></div>
+            <div class="s"><div class="c" style="background:#F2EDE4"><em>13.3:1</em></div><div class="t"><b>Warm Paper</b><small>#F2EDE4 · base</small></div></div>
+            <div class="s"><div class="c" style="background:#4FB3CC"><em>6.2:1</em></div><div class="t"><b>Signal Sky</b><small>#4FB3CC · data on dark</small></div></div>
+            <div class="s"><div class="c" style="background:#16262D"><em>15.6:1</em></div><div class="t"><b>Ink</b><small>#16262D · text</small></div></div>
+          </div>
+          <div class="ratio"><i style="flex:55;background:#E9E2D5;border-right:2px solid #fff"></i><i style="flex:25;background:#062A33"></i><i style="flex:10;background:#02647E"></i><i style="flex:7;background:#F2A73D"></i><i style="flex:3;background:#4FB3CC"></i></div>
+          <div class="ratio-l"><span>Paper / white 55%</span><span>Deep Mission 25%</span><span>Teal 10%</span><span>Amber 7% — actions only</span><span>Sky 3%</span></div>
+          <div class="engc"><span><i style="border-color:#F2A73D"></i>Growth</span><span><i style="border-color:#4FB3CC"></i>Relationship</span><span><i style="border-color:#E0734F"></i>Execution</span><span><i style="border-color:#2FA58C"></i>Revenue</span></div>
+        </div>
+        <div class="blk">
+          <h6>Type <span>Google Fonts</span></h6>
+          <div class="ty"><div class="aa">Aa</div><div><b>Bricolage Grotesque</b><small>Display · 700–800 · −3.5% tracking. Headlines, numbers, names.</small></div></div>
+          <div class="ty" style="border:0;padding-top:12px"><div class="aa in">Aa</div><div><b>Inter</b><small>Text &amp; UI · 400–700 · tabular figures for every number.</small></div></div>
+          <div class="scale">
+            <div><em>Display</em><span style="font:800 26px/1 var(--display);letter-spacing:-.035em">One login.</span><code>104 / 0.93</code></div>
+            <div><em>H2</em><span style="font:800 20px/1 var(--display);letter-spacing:-.03em">Four engines.</span><code>64 / 1.0</code></div>
+            <div><em>Body</em><span style="font-size:14px">Every gift, one record.</span><code>17 / 1.55</code></div>
+            <div><em>Label</em><span style="font:600 10.5px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--teal)">◦ Engine 01</span><code>12.5 / +16%</code></div>
+          </div>
+        </div>
+        <div class="blk">
+          <h6>UI kit <span>Components &amp; states</span></h6>
+          <div class="kit">
+            <a class="btn btn-amber">Let’s talk <span class="arr"><svg><use href="#arr"/></svg></span></a>
+            <a class="btn btn-ink">Price my stack <span class="arr"><svg><use href="#arr"/></svg></span></a>
+            <a class="btn btn-ghost" style="height:46px">See pricing</a>
+            <span class="chip">Donation pages</span><span class="chip" style="background:var(--night);color:var(--paper)">✦ MIRA</span>
+            <span class="inp">you@yourorg.org</span><span class="tgl"></span>
+          </div>
+          <div class="states">
+            <div><div style="background:var(--amber)">Default</div><small>REST</small></div>
+            <div><div style="background:var(--amber-600)">Hover</div><small>−8% L</small></div>
+            <div><div style="background:var(--amber);box-shadow:0 0 0 3px #fff,0 0 0 5px var(--teal)">Focus</div><small>2PX RING</small></div>
+            <div><div style="background:#E6E1D8;color:#8C979B">Disabled</div><small>40%</small></div>
+          </div>
+          <div class="icons">
+            <span><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5L13 4l9 7.5V22H4z"/><path d="M13 19s-4-2.4-4-5a2.2 2.2 0 014-1.2A2.2 2.2 0 0117 14c0 2.6-4 5-4 5z"/></svg></span>
+            <span><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l10-5 10 5M5 9v10m5.3-10v10m5.4-10v10M21 9v10M3 22h20"/></svg></span>
+            <span><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5v5h3.5L16 20V6l-8.5 4.5zM19.5 9.5a5 5 0 010 7"/></svg></span>
+            <span><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 10L13 5l10.5 5L13 15z"/><path d="M7 12.2V17c3.6 2.6 8.4 2.6 12 0v-4.8M23.5 10v6"/></svg></span>
+            <span style="color:var(--amber);background:var(--night);border-color:var(--night)"><svg viewBox="0 0 16 16"><path d="M8 1.5l1.6 4.3 4.4 1.7-4.4 1.7L8 13.5 6.4 9.2 2 7.5l4.4-1.7z" fill="currentColor"/></svg></span>
+            <span><i style="width:18px;height:18px;border-radius:50%;border:5px solid var(--teal)"></i></span>
+          </div>
+        </div>
+        <div class="blk" style="grid-column:span 2;padding-bottom:16px">
+          <h6>Imagery tone &amp; motif <span>Product is the hero; people are real</span></h6>
+          <div class="dd">
+            <div class="do"><b>Do</b>Real teams mid-task in natural light; product UI with real names and moments; the ring-and-connector motif from the logo to link ideas; teal duotone for secondary photos.</div>
+            <div class="dont"><b>Avoid</b>Suits in glass towers, generic handshakes, stock “laptop smiles”, decorative gradients with no meaning, more than one amber element per view.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= D · COPY + OFFERINGS ======================= -->
+<section class="strat">
+  <div class="st-grid">
+    <div class="copy">
+      <div class="lab" style="margin-bottom:6px"><span class="n">08</span><h3>Copy direction</h3><span>So the messaging hits as hard as the design</span></div>
+      <div class="voice">
+        <div><b>Plain-spoken</b><small>“One login”, not “a unified solution”. Words a board member would repeat.</small></div>
+        <div><b>Specific</b><small>Hours, days, line items, named people. A number beats an adjective.</small></div>
+        <div><b>Warm</b><small>Name the humans — donors, volunteers, staff. The software is never the hero.</small></div>
+        <div><b>Confident, never hype</b><small>Say what others leave out — then cite it. No “revolutionary”.</small></div>
+      </div>
+      <div class="formula">
+        <h6>Headline formula</h6>
+        <div class="f"><u>[Do the mission]</u>, <s>not [the busywork].</s></div>
+        <div class="ex"><span>Run your mission, not your software stack.</span><span>Bring in support without bringing in another tool.</span><span>Your renewal quote. We’ll bring the math.</span></div>
+      </div>
+      <div class="ba">
+        <h6>Before → after</h6>
+        <div class="ba-r"><div class="b"><small>Hero</small><span>Sharper Focus For Bolder Moves</span></div><span class="ar">→</span><div class="a">Run your mission, not your software stack.<small>Leads with the outcome, names the pain.</small></div></div>
+        <div class="ba-r"><div class="b"><small>Section</small><span>We will help you Grow · [Services]</span></div><span class="ar">→</span><div class="a">Four engines. One record. · [Explore Growth]<small>Says what it is; the button says where it goes.</small></div></div>
+        <div class="ba-r"><div class="b"><small>CTA</small><span>Schedule A Demo · Book A Consultation · See Demo</span></div><span class="ar">→</span><div class="a">Let’s talk<small>One verb everywhere; the demo is booked inside the flow.</small></div></div>
+      </div>
+      <div class="mc">
+        <h6>Micro-copy</h6>
+        <div class="mc-g">
+          <div><em>Button · loading → done</em><b>Booking…</b> → <b>You’re booked. Bring your renewal quote.</b></div>
+          <div><em>Form helper</em>45 minutes. No commitment. <b>We’ll bring the math.</b></div>
+          <div><em>Error</em>That email looks off — <b>mind checking it?</b></div>
+          <div><em>Empty state</em>No gifts yet. <b>Share your page to get the first one.</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="offers">
+      <div class="lab" style="margin-bottom:6px"><span class="n">09</span><h3>New service offerings</h3><span>Proposal · neutralising the big-company advantage</span></div>
+      <div class="of-head"><b>Big platforms sell seats and send you to a partner. Missio sells outcomes.</b><p>Each bundle packages what Missio’s team and engines already do — so it can launch next quarter, not next year.</p></div>
+      <div class="of">
+        <div class="nm"><span class="k">Switch bundle</span><b>Launch 30</b><p>Live on Missio in 30 days, at a fixed fee.</p><span class="mdl">Fixed fee · date in the contract</span></div>
+        <div><h6>What’s in it</h6><ul><li>Stack audit, migration, parallel run</li><li>First 5 pages built with MIRA</li><li>Staff training + named launch lead</li><li>Cutover the week you choose</li></ul></div>
+        <div><h6>Positioning</h6><p class="pos">Enterprise CRMs quote <b>6–12 months plus a partner</b>. Missio quotes a date — and owns it.</p><div class="feas">Feasible now: packages the stack audit, included migration and parallel run.</div></div>
+      </div>
+      <div class="of dark">
+        <div class="nm"><span class="k">Campaign add-on</span><b>Campaign Sprint</b><p>A done-with-you appeal, live in 10 working days.</p><span class="mdl">Per sprint · giving season, galas, surges</span></div>
+        <div><h6>What’s in it</h6><ul><li>MIRA-drafted appeal + pages</li><li>Donation &amp; event pages</li><li>Email + SMS sequence, segments</li><li>Live pacing dashboard for the board</li></ul></div>
+        <div><h6>Positioning</h6><p class="pos">Big platforms hand you tools. <b>Missio ships the campaign</b> — with a strategist who knows your record.</p><div class="feas">Feasible now: Growth + Relationship engines + MIRA, run by the onboarding team.</div></div>
+      </div>
+      <div class="of">
+        <div class="nm"><span class="k">Monthly add-on</span><b>Mission Desk</b><p>The IT department you don’t have.</p><span class="mdl">Monthly · cancel any time</span></div>
+        <div><h6>What’s in it</h6><ul><li>One named Missio specialist</li><li>Data hygiene + automations</li><li>New-hire and volunteer set-up</li><li>Quarterly board pack, all engines</li></ul></div>
+        <div><h6>Positioning</h6><p class="pos">No ticket queue, no partner invoices: <b>someone who knows your org by name</b>.</p><div class="feas">Feasible now: extends today’s support team; MIRA’s plain-English reports do the heavy lifting.</div></div>
+      </div>
+      <div class="neut">
+        <div><b>Speed</b>A dated go-live beats a 6–12 month implementation.</div>
+        <div><b>Focus</b>A finished campaign beats a bigger feature list.</div>
+        <div><b>Intimacy</b>A named human beats a support portal.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= E · WIREFRAMES + HANDOVER ======================= -->
+<section class="hand on-night">
+  <div class="hd-grid">
+    <div>
+      <div class="lab"><span class="n">10</span><h3>Wireframes</h3><span>Structure signed off before pixels</span></div>
+      <div class="wfs">
+        <div>
+          <div class="wf" style="width:178px">
+            <div class="dk" style="height:10px">Nav</div>
+            <div class="dk" style="height:70px">Hero · H1 · CTA · product</div>
+            <div style="height:12px">Trust strip</div>
+            <div class="row" style="grid-template-columns:1fr 1fr;height:44px"><div>Problem</div><div>Stack calc</div></div>
+            <div class="row" style="grid-template-columns:repeat(4,1fr);height:52px"><div>E1</div><div>E2</div><div>E3</div><div>E4</div></div>
+            <div class="dk" style="height:30px">MIRA</div>
+            <div style="height:44px">Comparison</div>
+            <div class="row" style="grid-template-columns:repeat(3,1fr);height:38px"><div>Aud</div><div>Aud</div><div>Aud</div></div>
+            <div class="row" style="grid-template-columns:repeat(3,1fr);height:28px"><div>01</div><div>02</div><div>03</div></div>
+            <div class="row" style="grid-template-columns:repeat(3,1fr);height:34px"><div>Svc</div><div>Svc</div><div>Svc</div></div>
+            <div style="height:28px">Quote + stats</div>
+            <div class="dk" style="height:28px">CTA</div>
+            <div class="dk" style="height:20px">Footer</div>
+          </div>
+          <div class="wcap">Home · desktop<small>11 sections</small></div>
+        </div>
+        <div>
+          <div class="wf" style="width:178px">
+            <div class="dk" style="height:10px">Nav</div>
+            <div style="height:10px">Sub-nav + CTA</div>
+            <div class="row" style="grid-template-columns:1fr 1fr;height:64px"><div>H1 · CTA</div><div class="dk">Builder UI</div></div>
+            <div style="height:12px">Replaces</div>
+            <div class="dk" style="height:22px">Outcomes</div>
+            <div class="row" style="grid-template-columns:repeat(3,1fr);height:60px"><div>F1</div><div>F2</div><div>F3</div></div>
+            <div class="row" style="grid-template-columns:repeat(3,1fr);height:44px"><div>Step</div><div>Step</div><div>Step</div></div>
+            <div class="row" style="grid-template-columns:1fr 1fr;height:36px"><div>Objection</div><div>Myth/real</div></div>
+            <div class="dk" style="height:22px">Add-on</div>
+            <div class="row" style="grid-template-columns:repeat(3,1fr);height:28px"><div>E2</div><div>E3</div><div>E4</div></div>
+            <div class="dk" style="height:28px">CTA</div>
+            <div class="dk" style="height:20px">Footer</div>
+          </div>
+          <div class="wcap">Service page<small>Benefit → proof → ask</small></div>
+        </div>
+        <div>
+          <div class="wf" style="width:78px">
+            <div class="dk" style="height:9px">Nav</div>
+            <div class="dk" style="height:84px">H1 CTA</div>
+            <div style="height:40px">Record</div>
+            <div style="height:40px">Problem</div>
+            <div style="height:52px">Engines</div>
+            <div style="height:30px">Compare</div>
+            <div style="height:30px">Aud</div>
+            <div class="dk" style="height:14px">Sticky</div>
+          </div>
+          <div class="wcap">Mobile<small>390</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="lab"><span class="n">11</span><h3>Developer handover</h3><span>Responsive specs · tokens · interactions · assets</span></div>
+      <div class="spec">
+        <div class="sp">
+          <h6>Grid &amp; breakpoints</h6>
+          <div class="bps"><div style="width:96px;height:58px">1440</div><div style="width:70px;height:48px">1024</div><div style="width:52px;height:40px">768</div><div style="width:30px;height:34px">390</div></div>
+          <table>
+            <tr><td>1440</td><td>12 col · 80 margin · 24 gutter</td></tr>
+            <tr><td>1024</td><td>12 col · 48 margin · 20 gutter</td></tr>
+            <tr><td>768</td><td>8 col · 32 margin · 16 gutter</td></tr>
+            <tr><td>390</td><td>4 col · 20 margin · 12 gutter</td></tr>
+          </table>
+        </div>
+        <div class="sp">
+          <h6>Tokens</h6>
+          <table>
+            <tr><td>Type (px)</td><td>104 · 64 · 46 · 28<br>20 · 17 · 12.5</td></tr>
+            <tr><td>Spacing</td><td>4 · 8 · 16 · 24 · 32<br>48 · 64 · 96</td></tr>
+            <tr><td>Radius</td><td>10 · 16 · 24 · 32 · pill</td></tr>
+            <tr><td>Elevation</td><td>e1 card · e2 float<br>e3 modal</td></tr>
+            <tr><td>Format</td><td>CSS custom properties</td></tr>
+          </table>
+        </div>
+        <div class="sp">
+          <h6>Interaction notes</h6>
+          <ul>
+            <li><b>Mega-menu:</b> click or 150 ms hover-intent; Esc closes; focus trapped.</li>
+            <li><b>Sub-nav:</b> sticks after the hero; “Let’s talk” always visible.</li>
+            <li><b>Motion:</b> 200–320 ms ease-out; honours reduced-motion.</li>
+          </ul>
+        </div>
+        <div class="sp">
+          <h6>Accessibility &amp; assets</h6>
+          <ul>
+            <li><b>WCAG 2.2 AA:</b> every text pair ≥ 4.5:1; focus ring 2 px teal.</li>
+            <li><b>Assets:</b> logo SVG ×3 colours, mark, 24 px icons, engine rings.</li>
+            <li><b>Source:</b> responsive HTML/CSS for every screen shown.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="lab"><span class="n">✓</span><h3>Heuristic review</h3></div>
+      <div class="heur">
+        <h6>First-visit test · homepage</h6>
+        <div class="hr"><div><b>Who are you?</b><small>Eyebrow + H1: nonprofit platform, one login</small></div><em>0 scrolls</em></div>
+        <div class="hr"><div><b>What do you do?</b><small>Four engines, one record, MIRA</small></div><em>1 scroll</em></div>
+        <div class="hr"><div><b>Why you over the big players?</b><small>Comparison table + switching path</small></div><em>2 scrolls</em></div>
+        <div class="hr"><div><b>Can I trust you?</b><small>Customers, Team Rubicon quote, cited sources</small></div><em>Every fold</em></div>
+        <div class="hr"><div><b>What do I do next?</b><small>“Let’s talk” in nav, hero, bars, CTA</small></div><em>1 click</em></div>
+      </div>
+      <div class="plan">
+        <h6>How I’d run it · 4-week plan</h6>
+        <div class="pw"><em>Wk 1</em><div><b>Discover &amp; structure</b><small>Kick-off call, content audit, sitemap + wireframes signed off</small></div></div>
+        <div class="pw"><em>Wk 2</em><div><b>Visual system + homepage</b><small>Style guide, hi-fi homepage, two review rounds</small></div></div>
+        <div class="pw"><em>Wk 3</em><div><b>Engine &amp; service pages</b><small>4 engine pages + services, every responsive state</small></div></div>
+        <div class="pw"><em>Wk 4</em><div><b>Copy, QA &amp; handover</b><small>Micro-copy pass, accessibility QA, dev walkthrough</small></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ship">
+    <img src="../assets/missio-logo-cream.svg" alt="Missio">
+    <span><b>Delivered:</b> responsive HTML/CSS for every screen · design tokens · SVG logo &amp; icons · PNG/JPG exports · font list</span>
+    <span class="r">Unlimited revisions →</span>
+  </div>
+</section>
+</body>
+</html>
